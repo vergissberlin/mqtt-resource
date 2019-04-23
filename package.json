@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/concourse-resources/mqtt-resource#readme",
   "devDependencies": {
+    "async": "^2.6.2",
     "chai": "^4.1.2",
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
