@@ -1,0 +1,15 @@
+/*
+
+!/.dockerignore
+!/.gitignore
+!/.editorconfig
+!/.travis.yml
+!/check
+!/CONTRIBUTE.md
+!/Dockerfile
+!/in
+!/out
+!/README.md
+!/src/
+!/package-lock.json
+!/package.json
