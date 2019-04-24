@@ -1,10 +1,12 @@
 {
     "params": {
-        "feed":       "overridefeed",
-        "message":    "The payload"
+        "topic":    "overridetopic",
+        "message":  "The payload",
+        "qos":      1
     },
     "source": {
-        "url":        "https://mqttbroker.sample",
-        "token":      "123456abcd"
+        "url":      "https://mqttbroker.sample",
+        "username": "iothero",
+        "password": "123456abcd"
     }
 }

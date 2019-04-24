@@ -11,8 +11,8 @@ const fixtureInput = require('./fixtures/input.json')
 Test behavior
 
 1. Test configuration
-    - source: url, token
-    - params: message, feed
+    - source: url, password
+    - params: message, topic
 2. Test to send messages
 3. Test callback to send status
 */
@@ -28,7 +28,7 @@ describe('mqtt out', () => {
         done()
     })
 
-    describe('configuration', () => {
+    describe('source configuration', () => {
         it('throws an error when url is missing', (done) => {
             delete this.input.source.url
 
@@ -41,30 +41,46 @@ describe('mqtt out', () => {
             })
         })
 
-        it('throws an error when token is missing', (done) => {
-            delete this.input.source.token
+        it('throws an error when username is missing', (done) => {
+            delete this.input.source.username
 
             out(this.input, baseFileDir, (error, result) => {
                 expect(error).to.be.not.null
                 expect(error).to.exist
                     .and.be.instanceof(Error)
-                    .and.have.property('message', 'Token for MQTT broker is not being set.')
+                    .and.have.property('message', 'username for MQTT broker is not being set.')
                 done()
             })
         })
 
-        it('throws an error when parameter feed is missing', (done) => {
-            delete this.input.params.feed
+        it('throws an error when password is missing', (done) => {
+            delete this.input.source.password
+
             out(this.input, baseFileDir, (error, result) => {
                 expect(error).to.be.not.null
                 expect(error).to.exist
                     .and.be.instanceof(Error)
-                    .and.have.property('message', 'The parameter feed is not being set.')
+                    .and.have.property('message', 'password for MQTT broker is not being set.')
                 done()
             })
         })
 
-        it('throws an error when parameter message is missing', (done) => {
+        })
+
+    describe('parameter configuration', () => {
+        
+        it('throws an error when topic is missing', (done) => {
+            delete this.input.params.topic
+            out(this.input, baseFileDir, (error, result) => {
+                expect(error).to.be.not.null
+                expect(error).to.exist
+                    .and.be.instanceof(Error)
+                    .and.have.property('message', 'The parameter topic is not being set.')
+                done()
+            })
+        })
+
+        it('throws an error when message is missing', (done) => {
             delete this.input.params.message
             out(this.input, baseFileDir, (error, result) => {
                 expect(error).to.be.not.null
@@ -74,6 +90,5 @@ describe('mqtt out', () => {
                 done()
             })
         })
-
     })
 })

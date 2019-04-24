@@ -7,8 +7,8 @@
 [![devDependencies Status](https://david-dm.org/concourse-resources/mqtt-resource/dev-status.svg)](https://david-dm.org/concourse-resources/mqtt-resource?type=dev) [![Greenkeeper badge](https://badges.greenkeeper.io/concourse-resources/mqtt-resource.svg)](https://greenkeeper.io/)
 
 
-Subscribe to MQTT feed and trigger jobs.
-Send MQTT messages to a feed from a MQTT broker.
+Subscribe to MQTT topic and trigger jobs.
+Send MQTT messages to a topic from a MQTT broker.
 
 Quick Example
 -------------
@@ -29,7 +29,7 @@ Quick Example
   - put: mqtt
     params:
       message: Change
-      feed: myfeed
+      topic: mytopic
 ```
 
 Source Configuration
@@ -41,7 +41,7 @@ resources:
   type: mqtt-resource
   source:
     url: https://mqttbroker.sample
-    token: xxxxx
+    password: xxxxx
 ```
 
 Resource Type Configuration
@@ -61,17 +61,17 @@ Behavior
 ### `in`: _Not implemented yet_
 
 
-### `out`: Creates, updates and transitions a MQTT feed
+### `out`: Creates, updates and transitions a MQTT topic
 
 #### Parameters
 
-* `message`: The message for the MQTT feed
+* `message`: The message for the MQTT topic
 ```yaml
 message: The build was successfully
 ```
-* `feed`: Override the feed if you want.
+* `topic`: Override the topic if you want.
 ```yaml
-feed: other/feed/to/publish
+topic: other/topic/to/publish
 ```
 
 Real world example
@@ -95,8 +95,8 @@ resources:
   type: mqtt-resource
   source:
     url: https://io.adafruit.com
-    token: {{adafruit-token}}
-    feed: defaultfeed
+    password: {{adafruit-password}}
+    topic: defaulttopic
 
 resource_types:
 - name: mqtt-resource
@@ -114,7 +114,7 @@ jobs:
   - put: docker-mqtt-resource    
   - put: mqtt
     params:
-      feed: overridefeed
+      topic: overridetopic
       message: Release done
     
 ```

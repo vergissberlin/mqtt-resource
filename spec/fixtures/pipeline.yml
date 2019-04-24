@@ -16,7 +16,7 @@ resources:
   type:                         mqtt
   source:
     url:                        mqttbroker.andrelademann.de
-    feed:                       project/alert
+    topic:                       project/alert
 
 
 #####################################################################################
@@ -70,7 +70,7 @@ jobs:
   on_failure:
     put:                        mqtt-broker
     params:
-      feed:                     my/overridden/feed
+      topic:                     my/overridden/topic
       payload:                  Release failure
   on_abort:
     put:                        mqtt-broker

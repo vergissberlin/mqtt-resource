@@ -12,15 +12,21 @@ module.exports = (input, baseFileDir, callback) => {
         }
     }
 
-    if ( ! source.token ) {
+    if ( ! source.username ) {
         if ( !error ) {
-            error = new Error('Token for MQTT broker is not being set.')
+            error = new Error('username for MQTT broker is not being set.')
         }
     }
 
-    if ( ! params.feed ) {
+    if ( ! source.password ) {
         if ( !error ) {
-            error = new Error('The parameter feed is not being set.')
+            error = new Error('password for MQTT broker is not being set.')
+        }
+    }
+
+    if ( ! params.topic ) {
+        if ( !error ) {
+            error = new Error('The parameter topic is not being set.')
         }
     }
 
@@ -29,7 +35,6 @@ module.exports = (input, baseFileDir, callback) => {
             error = new Error('The parameter message is not being set.')
         }
     }
-
 
     callback(error, output)
 
