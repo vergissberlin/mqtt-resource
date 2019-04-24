@@ -1,5 +1,7 @@
 # Concourse MQTT  Resource 
 
+![Status](https://img.shields.io/badge/status-in%20progress-red.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/concourse-resource/mqtt-resource.svg)
 [![Build Status](https://travis-ci.org/concourse-resources/mqtt-resource.svg?branch=master)](https://travis-ci.org/concourse-resources/mqtt-resource)
 [![dependencies Status](https://david-dm.org/concourse-resources/mqtt-resource/status.svg)](https://david-dm.org/concourse-resources/mqtt-resource)
 [![devDependencies Status](https://david-dm.org/concourse-resources/mqtt-resource/dev-status.svg)](https://david-dm.org/concourse-resources/mqtt-resource?type=dev) [![Greenkeeper badge](https://badges.greenkeeper.io/concourse-resources/mqtt-resource.svg)](https://greenkeeper.io/)
