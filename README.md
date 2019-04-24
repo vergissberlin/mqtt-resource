@@ -6,21 +6,11 @@
 [![dependencies Status](https://david-dm.org/concourse-resources/mqtt-resource/status.svg)](https://david-dm.org/concourse-resources/mqtt-resource)
 [![devDependencies Status](https://david-dm.org/concourse-resources/mqtt-resource/dev-status.svg)](https://david-dm.org/concourse-resources/mqtt-resource?type=dev) [![Greenkeeper badge](https://badges.greenkeeper.io/concourse-resources/mqtt-resource.svg)](https://greenkeeper.io/)
 
-
-Subscribe to MQTT topic and trigger jobs.
-Send MQTT messages to a topic from a MQTT broker.
+> Send MQTT messages to a topic from a MQTT broker.
+> Subscribing to MQTT topic to trigger jobs is not implemented yet.
 
 Quick Example
 -------------
-
-### Listen MQTT
-
-```yaml
-- name: update-mqtt
-  plan:
-  - get: mqtt
-    trigger: true
-```
 
 ### Send MQTT
 ```yaml
@@ -110,11 +100,10 @@ jobs:
   plan:
   - get: git-mqtt-resource
     trigger: true
-  - get: version
-  - put: docker-mqtt-resource    
+  - put: docker-mqtt-resource
   - put: mqtt
     params:
       topic: overridetopic
       message: Release done
-    
+      qos: 2
 ```

@@ -36,6 +36,10 @@ module.exports = (input, baseFileDir, callback) => {
         }
     }
 
+    if ( ! [0, 1, 2].includes(params.qos) ) {
+        params.qos = 0
+    }
+
     callback(error, output)
 
 }
