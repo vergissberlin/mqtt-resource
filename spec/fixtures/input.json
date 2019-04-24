@@ -1,0 +1,10 @@
+{
+    "params": {
+        "feed":       "overridefeed",
+        "message":    "The payload"
+    },
+    "source": {
+        "url":        "https://mqttbroker.sample",
+        "token":      "123456abcd"
+    }
+}

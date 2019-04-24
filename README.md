@@ -26,7 +26,7 @@ Quick Example
   plan:
   - put: mqtt
     params:
-      payload: Change
+      message: Change
       feed: myfeed
 ```
 
@@ -38,7 +38,7 @@ resources:
 - name: mqtt
   type: mqtt-resource
   source:
-    url: https://io.adafruit.com
+    url: https://mqttbroker.sample
     token: xxxxx
 ```
 
@@ -56,23 +56,20 @@ resource_types:
 Behavior
 --------
 
-### `in`: Listen on a MQTT feed
-
-#### Parameters
-*none*
+### `in`: _Not implemented yet_
 
 
 ### `out`: Creates, updates and transitions a MQTT feed
 
 #### Parameters
 
-* `payload`: The payload for the MQTT message
+* `message`: The message for the MQTT feed
 ```yaml
-payload: The build was successfully
+message: The build was successfully
 ```
 * `feed`: Override the feed if you want.
 ```yaml
-feed: otherfeed
+feed: other/feed/to/publish
 ```
 
 Real world example
@@ -116,6 +113,6 @@ jobs:
   - put: mqtt
     params:
       feed: overridefeed
-      payload: Release done
+      message: Release done
     
 ```
