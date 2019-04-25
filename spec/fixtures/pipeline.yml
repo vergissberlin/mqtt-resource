@@ -4,52 +4,50 @@
 resources:
 
 # Docker
-- name:                         docker-alpine
-  type:                         docker-image
-  check_every:                  10m
+- name: docker-alpine
+  type: docker-image
   source:
-    repository:                 alpine
-    tag:                        3.8
+    repository: alpine
 
 # Others
-- name:                         mqtt-broker
-  type:                         mqtt
+- name: mqtt-broker
+  type: mqtt
   source:
-    url:                        mqttbroker.andrelademann.de
-    topic:                       project/alert
+    url: mqttbroker.andrelademann.de
+    topic: project/alert
 
 
 #####################################################################################
 resource_types:
-- name:                         mqtt
-  type:                         docker-image
+- name: mqtt
+  type: docker-image
   source:
-    repository:                 concourse-resources/mqtt-resource
-    tag:                        latest
+    repository: concourse-resources/mqtt-resource
+
+
 #####################################################################################
 jobs:
-- name:                         test
-  serial:                       true
-  build_logs_to_retain:         10
+- name: test
+  serial: true
+  build_logs_to_retain: 10
   plan:
   - aggregate:
-    - get:                      docker-alpine
-      trigger:                  true
-  - task:                       test
-    privileged:                 true
+    - get: docker-alpine
+      trigger: true
+  - task: test
+    privileged: true
     config:
-      platform:                 linux
+      platform: linux
       image_resource:
-        type:                   docker-image
+        type: docker-image
         source:
-          repository:           netresearch/dcind
+          repository:netresearch/dcind
       inputs:
-        - name:                 docker-alpine
+      - name: docker-alpine
       outputs:
-      - name:                   out
-        path:                   ""
+      - name: out
       run:
-        path:                   sh
+        path: sh
         args:
         - -exc
         - |
@@ -64,15 +62,15 @@ jobs:
           message header "Available images"
           docker images
   on_success:
-    put:                        mqtt-broker
+    put: mqtt-broker
     params:
-      payload:                  Release success
+      payload: Release success
   on_failure:
-    put:                        mqtt-broker
+    put: mqtt-broker
     params:
-      topic:                     my/overridden/topic
-      payload:                  Release failure
+      topic: my/overridden/topic
+      payload: Release failure
   on_abort:
-    put:                        mqtt-broker
+    put: mqtt-broker
     params:
-      payload:                  Release aborted
+      payload: Release aborted
