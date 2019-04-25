@@ -1,12 +1,14 @@
 {
 	"params": {
-		"topic": "overridetopic",
+		"topic": "override/topic/from/params",
 		"message": "The payload",
 		"qos": 1
 	},
 	"source": {
-		"url": "https://mqttbroker.sample",
-		"username": "iothero",
-		"password": "123456abcd"
+		"url": "https://mqttbroker.andrelademann.de",
+		"port": 144,
+    "topic": "topic/from/source",
+		"username": "vergissberlin",
+		"password": "TGjtRWmfHDhAY6WyEZhFjaq9"
 	}
 }
