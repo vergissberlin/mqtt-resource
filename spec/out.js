@@ -12,8 +12,8 @@ const fixtureInput = require('./fixtures/input.json')
  *
  * 1. Test configuration
  * - source: url, password
- * - params: message, topic
- * 2. Test to send messages
+ * - params: payload, topic
+ * 2. Test to send payloads
  * 3. Test callback to send status
  */
 describe('mqtt out', () => {
@@ -31,8 +31,7 @@ describe('mqtt out', () => {
 	describe('source configuration', () => {
 		it('throws an error when url is missing', (done) => {
 			delete this.input.source.url
-
-			out(this.input, baseFileDir, (error, result) => {
+			out(this.input, baseFileDir, (error) => {
 				expect(error).to.exist
 					.and.be.instanceof(Error)
 					.and.have.property('message', 'URL for MQTT broker is not being set.')
@@ -42,8 +41,7 @@ describe('mqtt out', () => {
 
 		it('set default port when port is not set', (done) => {
 			delete this.input.source.port
-
-			out(this.input, baseFileDir, (error, result, source, params) => {
+			out(this.input, baseFileDir, (error, result, source) => {
 				expect(error).to.be.null
 				expect(source.port).to.be.equal(1883)
 				done()
@@ -52,8 +50,7 @@ describe('mqtt out', () => {
 
 		it('set default port when port is not a number', (done) => {
 			this.input.source.port = 'holy cow'
-
-			out(this.input, baseFileDir, (error, result, source, params) => {
+			out(this.input, baseFileDir, (error, result, source) => {
 				expect(error).to.be.null
 				expect(source.port).to.be.equal(1883)
 				done()
@@ -62,8 +59,7 @@ describe('mqtt out', () => {
 
 		it('set port from configuration even when it is a string', (done) => {
 			this.input.source.port = '144'
-
-			out(this.input, baseFileDir, (error, result, source, params) => {
+			out(this.input, baseFileDir, (error, result, source) => {
 				expect(error).to.be.null
 				expect(source.port).to.be.equal(144)
 				done()
@@ -72,8 +68,7 @@ describe('mqtt out', () => {
 
 		it('set port from configuration even when it is a string', (done) => {
 			this.input.source.port = 144
-
-			out(this.input, baseFileDir, (error, result, source, params) => {
+			out(this.input, baseFileDir, (error, result, source) => {
 				expect(error).to.be.null
 				expect(source.port).to.be.equal(144)
 				done()
@@ -82,8 +77,7 @@ describe('mqtt out', () => {
 
 		it('throws an error when username is missing', (done) => {
 			delete this.input.source.username
-
-			out(this.input, baseFileDir, (error, result) => {
+			out(this.input, baseFileDir, (error) => {
 				expect(error).to.exist
 					.and.be.instanceof(Error)
 					.and.have.property('message', 'username for MQTT broker is not being set.')
@@ -93,8 +87,7 @@ describe('mqtt out', () => {
 
 		it('throws an error when password is missing', (done) => {
 			delete this.input.source.password
-
-			out(this.input, baseFileDir, (error, result) => {
+			out(this.input, baseFileDir, (error) => {
 				expect(error).to.be.not.null
 				expect(error).to.exist
 					.and.be.instanceof(Error)
@@ -102,16 +95,15 @@ describe('mqtt out', () => {
 				done()
 			})
 		})
-
 	})
 
 	describe('parameter configuration', () => {
-		it('throws an error when message is missing', (done) => {
-			delete this.input.params.message
-			out(this.input, baseFileDir, (error, result) => {
+		it('throws an error when payload is missing', (done) => {
+			delete this.input.params.payload
+			out(this.input, baseFileDir, (error) => {
 				expect(error).to.exist
 					.and.be.instanceof(Error)
-					.and.have.property('message', 'The parameter message is not being set.')
+					.and.have.property('message', 'The parameter payload is not being set.')
 				done()
 			})
 		})
@@ -125,10 +117,10 @@ describe('mqtt out', () => {
 			})
 		})
 	})
-	describe('override configuration', () => {
 
+	describe('override configuration', () => {
 		it('is possible to override the topics with params', (done) => {
-			out(this.input, baseFileDir, (error, result, source, params) => {
+			out(this.input, baseFileDir, (error, result, source) => {
 				expect(error).to.be.null
 				expect(source.topic).to.be.equal('override/topic/from/params')
 				done()
@@ -137,15 +129,16 @@ describe('mqtt out', () => {
 
 		it('is possible to set topic as source only', (done) => {
 			delete this.input.params.topic
-			out(this.input, baseFileDir, (error, result, source, params) => {
+			out(this.input, baseFileDir, (error, result, source) => {
 				expect(error).to.be.null
 				expect(source.topic).to.be.equal('topic/from/source')
 				done()
 			})
 		})
+
 		it('is possible to set topic as param only', (done) => {
 			delete this.input.source.topic
-			out(this.input, baseFileDir, (error, result, source, params) => {
+			out(this.input, baseFileDir, (error, result, source) => {
 				expect(error).to.be.null
 				expect(source.topic).to.be.equal('override/topic/from/params')
 				done()

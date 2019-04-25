@@ -49,9 +49,9 @@ module.exports = (input, baseFileDir, callback) => {
 		source.topic = params.topic
 	}
 
-	if ( !params.message ) {
+	if ( !params.payload ) {
 		if ( !error ) {
-			error = new Error('The parameter message is not being set.')
+			error = new Error('The parameter payload is not being set.')
 		}
 	}
 

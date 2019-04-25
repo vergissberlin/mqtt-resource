@@ -1,7 +1,7 @@
 {
 	"params": {
 		"topic": "override/topic/from/params",
-		"message": "The payload",
+		"payload": "The payload",
 		"qos": 1
 	},
 	"source": {
