@@ -34,7 +34,7 @@ describe('mqtt out', () => {
 			out(this.input, baseFileDir, (error) => {
 				expect(error).to.exist
 					.and.be.instanceof(Error)
-					.and.have.property('message', 'URL for MQTT broker is not being set.')
+					.and.have.property('message', 'URL for MQTT broker has not been set.')
 				done()
 			})
 		})
@@ -80,7 +80,7 @@ describe('mqtt out', () => {
 			out(this.input, baseFileDir, (error) => {
 				expect(error).to.exist
 					.and.be.instanceof(Error)
-					.and.have.property('message', 'username for MQTT broker is not being set.')
+					.and.have.property('message', 'The user name for MQTT broker has not been set.')
 				done()
 			})
 		})
@@ -91,7 +91,7 @@ describe('mqtt out', () => {
 				expect(error).to.be.not.null
 				expect(error).to.exist
 					.and.be.instanceof(Error)
-					.and.have.property('message', 'password for MQTT broker is not being set.')
+					.and.have.property('message', 'The password for MQTT broker has not been set.')
 				done()
 			})
 		})
@@ -103,7 +103,16 @@ describe('mqtt out', () => {
 			out(this.input, baseFileDir, (error) => {
 				expect(error).to.exist
 					.and.be.instanceof(Error)
-					.and.have.property('message', 'The parameter payload is not being set.')
+					.and.have.property('message', 'The parameter payload has not been set.')
+				done()
+			})
+		})
+
+		it('converts payload also to strings', (done) => {
+			this.input.params.payload = 1.2
+			out(this.input, baseFileDir, (error, result, params) => {
+				expect(error).to.not.exist
+				expect(params.payload).to.be.string
 				done()
 			})
 		})

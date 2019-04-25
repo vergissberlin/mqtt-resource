@@ -6,7 +6,7 @@
 [![dependencies Status](https://david-dm.org/concourse-resources/mqtt-resource/status.svg)](https://david-dm.org/concourse-resources/mqtt-resource)
 [![devDependencies Status](https://david-dm.org/concourse-resources/mqtt-resource/dev-status.svg)](https://david-dm.org/concourse-resources/mqtt-resource?type=dev) [![Greenkeeper badge](https://badges.greenkeeper.io/concourse-resources/mqtt-resource.svg)](https://greenkeeper.io/)
 
-> Send MQTT messages to a topic from a MQTT broker.
+> Send MQTT payloads to a topic from a MQTT broker.
 > Subscribing to MQTT topic to trigger jobs is not implemented yet.
 
 Quick Example
@@ -18,7 +18,7 @@ Quick Example
   plan:
   - put: mqtt
     params:
-      message: Change
+      payload: Change
       topic: mytopic
 ```
 
@@ -55,9 +55,9 @@ Behavior
 
 #### Parameters
 
-* `message`: The message for the MQTT topic
+* `payload`: The payload for the MQTT topic
 ```yaml
-message: The build was successfully
+payload: The build was successfully
 ```
 * `topic`: Override the topic if you want.
 ```yaml
@@ -104,6 +104,6 @@ jobs:
   - put: mqtt
     params:
       topic: overridetopic
-      message: Release done
+      payload: Release done
       qos: 2
 ```

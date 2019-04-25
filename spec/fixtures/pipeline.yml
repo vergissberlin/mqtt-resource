@@ -11,22 +11,26 @@ resources:
 
 # Others
 - name: mqtt-broker
-  type: mqtt
+  type: mqtt-resource
   source:
     url: mqttbroker.andrelademann.de
     topic: project/alert
+    username: vergissberlin
+    password: TGjtRWmfHDhAY6WyEZhFjaq9
 
 
 #####################################################################################
 resource_types:
-- name: mqtt
+
+- name: mqtt-resource
   type: docker-image
   source:
-    repository: concourse-resources/mqtt-resource
+    repository: concourseresources/mqtt-resource
 
 
 #####################################################################################
 jobs:
+
 - name: test
   serial: true
   build_logs_to_retain: 10
@@ -41,7 +45,7 @@ jobs:
       image_resource:
         type: docker-image
         source:
-          repository:netresearch/dcind
+          repository: alpine
       inputs:
       - name: docker-alpine
       outputs:
@@ -51,16 +55,7 @@ jobs:
         args:
         - -exc
         - |
-          message header "Initialize docker"
-          source /docker-lib.sh
-          start_docker
-
-          message header "Load images"
-          docker load -i docker-alpine/image
-          docker tag "$(cat docker-alpine/image-id)" alpine:latest
-
-          message header "Available images"
-          docker images
+          echo "Hello World"
   on_success:
     put: mqtt-broker
     params:
