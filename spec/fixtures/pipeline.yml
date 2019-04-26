@@ -26,6 +26,7 @@ resource_types:
   type: docker-image
   source:
     repository: concourseresources/mqtt-resource
+    tag: development
 
 
 #####################################################################################
@@ -37,6 +38,8 @@ jobs:
   plan:
   - aggregate:
     - get: docker-alpine
+      trigger: true
+    - get: mqtt-broker
       trigger: true
   - task: test
     privileged: true

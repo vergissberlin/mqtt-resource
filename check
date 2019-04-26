@@ -1,3 +1,47 @@
-#!/bin/bash
+#!/usr/bin/node
 
-echo "[]"
+'use strict'
+
+const check = require('./src/check.js')
+
+
+/*
+BUILD_ID=3664
+USER=root
+ATC_EXTERNAL_URL=https://ci.netresearch.de
+PWD=/tmp/build/get
+HOME=/root
+BUILD_PIPELINE_NAME=ui
+BUILD_TEAM_NAME=blugento
+TERM=xterm-256color
+BUILD_JOB_NAME=build:master
+BUILD_NAME=16
+SHLVL=1
+PATH=/usr/local/sbin:/usr/lo
+
+TOPIC =  /{BUILD_TEAM_NAME}/{BUILD_PIPELINE_NAME}
+*/
+
+
+// https://translate.google.com/translate?source=osdd&sl=auto&tl=de&u=https%3A%2F%2Fconcourse-ci.org%2Fimplementing-resources.html%23resource-check
+
+
+// This must be set BEFORE out.js is required for the debug info to show up
+process.env.DEBUG = '*'
+
+process.stdin.resume()
+process.stdin.setEncoding('utf8')
+process.stdin.on('data',  (data) => {
+	process.stdout.write(JSON.stringify([]}))
+	process.stdout.write(JSON.stringify(data))
+	process.stdout.write(JSON.stringify(process.env))
+
+	in (JSON.parse(data), (error, result) => {
+		if ( error ) {
+			process.stderr.write(error.message)
+			process.exit(1)
+		}
+		process.stdout.write(JSON.stringify(result))
+	})
+})
+
