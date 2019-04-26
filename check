@@ -31,17 +31,16 @@ process.env.DEBUG = '*'
 
 process.stdin.resume()
 process.stdin.setEncoding('utf8')
-process.stdin.on('data',  (data) => {
-	process.stdout.write(JSON.stringify([]}))
+process.stdin.on('data', (data) => {
+	process.stdout.write(JSON.stringify([]))
 	process.stdout.write(JSON.stringify(data))
 	process.stdout.write(JSON.stringify(process.env))
 
-	in (JSON.parse(data), (error, result) => {
+	check(JSON.parse(data), (error, output) => {
 		if ( error ) {
 			process.stderr.write(error.message)
 			process.exit(1)
 		}
-		process.stdout.write(JSON.stringify(result))
+		process.stdout.write(JSON.stringify(output))
 	})
 })
-
