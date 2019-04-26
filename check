@@ -33,7 +33,7 @@ process.stdin.resume()
 process.stdin.setEncoding('utf8')
 process.stdin.on('data', (data) => {
 	process.stdout.write(JSON.stringify([
-		{'ref': Date.now() },
+		{'ref': Date.now().toString() },
 		{'ref': '1556310038'},
 		{'ref': '1556310050'},
 		{'ref': '1556310090'}

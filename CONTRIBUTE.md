@@ -29,7 +29,8 @@
 ## Custom build
 
 ```shell
-docker build -t concourse-resources/mqtt-resource .
+docker build -t concourseresources/mqtt-resource .
+docker push concourseresources/mqtt-resource
 ```
 
 ## Test pipeline
