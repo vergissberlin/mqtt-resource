@@ -1,3 +1,39 @@
 #!/bin/bash
 
-echo '{"version":{"ref":"none"}}'
+echo
+'{"version":{"ref":"none"}}'
+
+
+#
+!/usr/
+bin / node
+
+'use strict'
+
+const check = require('./src/input.js')
+
+// This must be set BEFORE out.js is required for the debug info to show up
+process.env.DEBUG = '*'
+
+process.stdin.resume()
+process.stdin.setEncoding('utf8')
+process.stdin.on('data', (data) => {
+	process.stdout.write(JSON.stringify({
+		'version': {'ref': Date.now()},
+		'metadata': [
+			{'name': 'topic', 'value': 'Hulk Hogan'}
+		]
+	}))
+
+	input(JSON.parse(data), (error, output) => {
+		if ( error ) {
+			process.stderr.write(error.message)
+			process.stdout.write(JSON.stringify(data))
+			process.stdout.write(JSON.stringify(process.env))
+			process.exit(1)
+		}
+		//process.stdout.write(JSON.stringify(output))
+	})
+})
+
+

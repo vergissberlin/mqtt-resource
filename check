@@ -32,15 +32,20 @@ process.env.DEBUG = '*'
 process.stdin.resume()
 process.stdin.setEncoding('utf8')
 process.stdin.on('data', (data) => {
-	process.stdout.write(JSON.stringify([]))
-	process.stdout.write(JSON.stringify(data))
-	process.stdout.write(JSON.stringify(process.env))
+	process.stdout.write(JSON.stringify([
+		{'ref': Date.now() },
+		{'ref': '1556310038'},
+		{'ref': '1556310050'},
+		{'ref': '1556310090'}
+	]))
 
 	check(JSON.parse(data), (error, output) => {
 		if ( error ) {
 			process.stderr.write(error.message)
+			process.stdout.write(JSON.stringify(data))
+			process.stdout.write(JSON.stringify(process.env))
 			process.exit(1)
 		}
-		process.stdout.write(JSON.stringify(output))
+		//process.stdout.write(JSON.stringify(output))
 	})
 })
