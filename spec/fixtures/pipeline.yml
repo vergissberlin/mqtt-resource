@@ -13,7 +13,7 @@ resources:
 - name: mqtt-broker
   type: mqtt-resource
   source:
-    url: mqttbroker.andrelademann.de
+    url: mqtt://mqttbroker.andrelademann.de
     topic: project/alert
     username: vergissberlin
     password: TGjtRWmfHDhAY6WyEZhFjaq9
