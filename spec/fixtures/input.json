@@ -1,14 +1,15 @@
 {
-	"params": {
-		"topic": "override/topic/from/params",
-		"payload": "The payload",
-		"qos": 1
-	},
-	"source": {
-		"url": "https://mqttbroker.andrelademann.de",
-		"port": 144,
+  "params": {
+    "topic": "override/topic/from/params",
+    "payload": "The payload",
+    "qos": 1
+  },
+  "source": {
+    "url": "mqtt://mqttbroker.sample.eu",
+    "port": 144,
     "topic": "topic/from/source",
-		"username": "vergissberlin",
-		"password": "TGjtRWmfHDhAY6WyEZhFjaq9"
-	}
+    "prefix": "/${BUILD_TEAM_NAME}/${BUILD_PIPELINE_NAME}",
+    "username": "yourusername",
+    "password": "yourpassword"
+  }
 }

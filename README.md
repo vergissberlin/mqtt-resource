@@ -29,8 +29,10 @@ resources:
 - name: mqtt
   type: mqtt-resource
   source:
-    url: https://mqttbroker.sample
+    url: mqtt://mybroker.eu
+    username: xxxxx
     password: xxxxx
+    prefix: /topic/prefix/${BUILD_TEAM_NAME}/${BUILD_PIPELINE_NAME}
 ```
 
 ## Resource type configuration
@@ -77,7 +79,7 @@ resources:
 - name: docker-mqtt-resource
   type: docker
   source:
-    uri:
+    repository: hulk/bigthing
 
 - name: mqtt
   type: mqtt-resource

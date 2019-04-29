@@ -25,6 +25,8 @@
   "devDependencies": {
     "async": "^2.6.2",
     "chai": "^4.1.2",
+    "chai-integer": "^0.1.0",
+    "chai-string": "^1.5.0",
     "istanbul": "^0.4.5",
     "mocha": "^6.1.4",
     "mocha-junit-reporter": "^1.22.0",
@@ -35,6 +37,7 @@
   },
   "dependencies": {
     "debug": "^4.1.0",
+    "docker-container-id": "^1.0.1",
     "mqtt": "^2.18.8"
   }
 }

@@ -6,18 +6,20 @@ resources:
 # Docker
 - name: docker-alpine
   type: docker-image
+  icon: docker
   source:
     repository: alpine
 
 # Others
 - name: mqtt-broker
   type: mqtt-resource
+  icon: cloud-outline
   source:
     url: mqtt://mqttbroker.andrelademann.de
     topic: project/alert
+    prefix: project/trigger/${BUILD_TEAM_NAME}/${BUILD_PIPELINE_NAME}
     username: vergissberlin
-    password: TGjtRWmfHDhAY6WyEZhFjaq9
-
+    password: oJT9U7swNc7fS6E9SnfIqzKP
 
 #####################################################################################
 resource_types:
