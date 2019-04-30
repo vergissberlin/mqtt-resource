@@ -14,7 +14,7 @@ RUN ls -lisah
 RUN chmod +x /opt/resource/out /opt/resource/in /opt/resource/check
 
 RUN npm install
-# RUN npm test
+RUN npm test
 
 RUN rm -rf \
     spec \
