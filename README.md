@@ -1,10 +1,19 @@
-# Concourse MQTT Resource
+# Concourse MQTT Resource  [![Twitter](https://img.shields.io/twitter/url/https/github.com/vergissberlin/mqtt-resource.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fvergissberlin%2Fmqtt-resource)
 
-![Status](https://img.shields.io/badge/status-ALPHA-blue.svg)
-![GitHub last commit](https://img.shields.io/github/last-commit/vergissberlin/mqtt-resource.svg)
+![GitHub release](https://img.shields.io/github/release/vergissberlin/mqtt-resource.svg)
+![GitHub release](https://img.shields.io/github/release-pre/vergissberlin/mqtt-resource.svg)
+
 [![Build Status](https://travis-ci.org/vergissberlin/mqtt-resource.svg?branch=master)](https://travis-ci.org/vergissberlin/mqtt-resource)
+![Docker Build Status](https://img.shields.io/docker/build/vergissberlin/mqtt-resource.svg)
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a5994d1cacb9429cbaf36e324a05b9ab)](https://www.codacy.com/app/vergissberlin/mqtt-resource?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vergissberlin/mqtt-resource&amp;utm_campaign=Badge_Grade)
 [![dependencies Status](https://david-dm.org/vergissberlins/mqtt-resource/status.svg)](https://david-dm.org/vergissberlins/mqtt-resource)
+
+
+![GitHub last commit](https://img.shields.io/github/last-commit/vergissberlin/mqtt-resource.svg)
+[![GitHub issues](https://img.shields.io/github/issues/vergissberlin/mqtt-resource.svg)](https://github.com/vergissberlin/mqtt-resource/issues)
+![Docker Pulls](https://img.shields.io/docker/pulls/vergissberlin/mqtt-resource.svg)
+
 
 > Send MQTT payloads to a topic from a MQTT broker.
 > Subscribing to MQTT topic to trigger jobs is not implemented yet.
