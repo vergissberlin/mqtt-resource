@@ -7,6 +7,7 @@
 ![Docker Build Status](https://img.shields.io/docker/build/vergissberlin/mqtt-resource.svg)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a5994d1cacb9429cbaf36e324a05b9ab)](https://www.codacy.com/app/vergissberlin/mqtt-resource?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vergissberlin/mqtt-resource&amp;utm_campaign=Badge_Grade)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/vergissberlin/mqtt-resource/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/vergissberlin/mqtt-resource/?branch=master)
 [![dependencies Status](https://david-dm.org/vergissberlins/mqtt-resource/status.svg)](https://david-dm.org/vergissberlins/mqtt-resource)
 
 
