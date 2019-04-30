@@ -4,5 +4,7 @@
 .editorconfig
 .travis.yml
 CONTRIBUTE.md
-README.md
+coverage
 Dockerfile
+README.md
+reports

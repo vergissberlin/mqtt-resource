@@ -10,8 +10,10 @@ RUN apk add --no-cache \
 WORKDIR /opt/resource/
 
 COPY . /opt/resource
+
 RUN npm install
-RUN npm run test-with-coverage
+RUN npm run test &&\
+	npm run test-report-coverage
 
 RUN rm -rf \
     spec \
