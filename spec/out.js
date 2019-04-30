@@ -10,7 +10,7 @@ const fixtureInput = require('./fixtures/input.json')
 /**
  * Test behavior
  *
- * 1. Test configuration
+ * 1. Test sourceConfiguration
  * - source: url, password
  * - params: payload, topic
  * 2. Test to send payloads

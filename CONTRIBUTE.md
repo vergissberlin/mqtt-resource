@@ -29,8 +29,8 @@
 ## Custom build
 
 ```shell
-docker build -t concourseresources/mqtt-resource .
-docker push concourseresources/mqtt-resource
+docker build --build-arg CODACY_PROJECT_TOKEN -t vergissberlin/mqtt-resource .
+docker push vergissberlin/mqtt-resource
 ```
 
 ## Test pipeline
@@ -39,4 +39,10 @@ docker push concourseresources/mqtt-resource
 fly login -t local -c http://0.0.0.0:8080
 fly set-pipeline -t local -p mqtt-resource -c spec/fixtures/pipeline.yml -n
 fly -t local unpause-pipeline -p mqtt-resource
+```
+
+## Debug pipeline
+
+```shell
+fly hijack -t local -j mqtt-resource/test
 ```

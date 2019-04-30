@@ -9,7 +9,7 @@ class Validate {
 		return pattern.test(string)
 	}
 
-	configuration(input, callback)  {
+	sourceConfiguration(input, callback)  {
 
 		let error = null
 
@@ -52,6 +52,13 @@ class Validate {
 			input.source.topic = input.params.topic || input.source.topic
 		}
 
+		callback(input, error)
+	}
+
+
+	paramConfiguration(input, callback)  {
+
+		let error = null
 
 		if ( !input.params ) {
 			if ( !error ) {
@@ -67,7 +74,7 @@ class Validate {
 			}
 
 			if ( ![0, 1, 2].includes(input.params.qos) ) {
-				input.params.qos = 0
+				input.params.qos = 2
 			}
 		}
 

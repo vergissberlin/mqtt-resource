@@ -7,7 +7,7 @@ module.exports = (input, callback) => {
 	let error = null
 	let output = null
 
-	validate.configuration(input, (validatedInput, thrownError) => {
+	validate.sourceConfiguration(input, (validatedInput, thrownError) => {
 		input = validatedInput
 		error = thrownError
 	})
@@ -19,29 +19,24 @@ module.exports = (input, callback) => {
 		let version = null
 
 		client.on('connect', () => {
-			client.subscribe(input.source.prefix, (errorConnection) => {
+			let topic = input.source.prefix + '/' + process.env.BUILD_TEAM_NAME + '/' + process.env.BUILD_PIPELINE_NAME
+			console.log(topic)
+			client.subscribe(topic, (errorConnection) => {
 				if ( !errorConnection ) {
-					client.publish(input.source.topic, input.params.payload, {
-						qos: input.params.qos,
-						retain: false
+					client.on('message', (topic, message) => {
+						version = message.toString()
+						client.end()
 					})
 				} else {
 					error = errorConnection
 				}
 			})
 		})
-		client.on('message', (topic, message) => {
-			version = message.toString()
-			client.end()
-		})
-
-
 
 		output = [
 			{'ref': version}
 		]
 	}
-
 
 	callback(error, output)
 }

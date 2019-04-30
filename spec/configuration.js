@@ -11,13 +11,13 @@ const fixtureInput = require('./fixtures/input.json')
 /**
  * Test behavior
  *
- * 1. Test configuration
+ * 1. Test sourceConfiguration
  * - source: url, password
  * - params: payload, topic
  * 2. Test to send payloads
  * 3. Test callback to send status
  */
-describe('configuration', () => {
+describe('sourceConfiguration', () => {
 
 	describe('MQTT', () => {
 		let mqttConfig = configuration.mqtt(JSON.parse(JSON.stringify(fixtureInput)))
@@ -26,8 +26,7 @@ describe('configuration', () => {
 			expect(mqttConfig.password).to.not.be.undefined
 			expect(mqttConfig.port).to.not.be.undefined
 			expect(mqttConfig.qos).to.not.be.undefined
-			expect(mqttConfig.will.topic).to.not.be.undefined
-			expect(mqttConfig.will.payload).to.not.be.undefined
+			expect(mqttConfig.will).to.be.undefined
 			done()
 		})
 		it('has the username as string', (done) => {

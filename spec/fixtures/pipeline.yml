@@ -17,7 +17,7 @@ resources:
   source:
     url: mqtt://mqttbroker.andrelademann.de
     topic: project/alert
-    prefix: project/trigger/${BUILD_TEAM_NAME}/${BUILD_PIPELINE_NAME}
+    prefix: project/trigger
     username: vergissberlin
     password: oJT9U7swNc7fS6E9SnfIqzKP
 
@@ -27,7 +27,7 @@ resource_types:
 - name: mqtt-resource
   type: docker-image
   source:
-    repository: concourseresources/mqtt-resource
+    repository: vergissberlin/mqtt-resource
     tag: development
 
 

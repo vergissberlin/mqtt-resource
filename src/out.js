@@ -7,7 +7,11 @@ module.exports = (input, callback) => {
 	let error = null
 	let output = null
 
-	validate.configuration(input, (validatedInput, thrownError) => {
+	validate.sourceConfiguration(input, (validatedInput, thrownError) => {
+		input = validatedInput
+		error = thrownError
+	})
+	validate.paramConfiguration(input, (validatedInput, thrownError) => {
 		input = validatedInput
 		error = thrownError
 	})
