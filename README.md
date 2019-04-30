@@ -3,6 +3,7 @@
 ![Status](https://img.shields.io/badge/status-ALPHA-blue.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/vergissberlin/mqtt-resource.svg)
 [![Build Status](https://travis-ci.org/vergissberlin/mqtt-resource.svg?branch=master)](https://travis-ci.org/vergissberlin/mqtt-resource)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a5994d1cacb9429cbaf36e324a05b9ab)](https://www.codacy.com/app/vergissberlin/mqtt-resource?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vergissberlin/mqtt-resource&amp;utm_campaign=Badge_Grade)
 [![dependencies Status](https://david-dm.org/vergissberlins/mqtt-resource/status.svg)](https://david-dm.org/vergissberlins/mqtt-resource)
 
 > Send MQTT payloads to a topic from a MQTT broker.

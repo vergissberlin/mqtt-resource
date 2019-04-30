@@ -11,7 +11,7 @@ WORKDIR /opt/resource/
 
 COPY . /opt/resource
 RUN npm install
-RUN npm test-with-coverage
+RUN npm run test-report-coverage
 
 RUN rm -rf \
     spec \
@@ -19,4 +19,3 @@ RUN rm -rf \
     package-lock.json
 
 RUN chmod +x /opt/resource/out /opt/resource/in /opt/resource/check
-
