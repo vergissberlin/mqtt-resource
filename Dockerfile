@@ -9,13 +9,14 @@ RUN apk add --no-cache \
 
 WORKDIR /opt/resource/
 
+COPY . /opt/resource
 RUN npm install
+RUN npm test-with-coverage
 
 RUN rm -rf \
     spec \
     package.json \
     package-lock.json
 
-COPY . /opt/resource
 RUN chmod +x /opt/resource/out /opt/resource/in /opt/resource/check
 
