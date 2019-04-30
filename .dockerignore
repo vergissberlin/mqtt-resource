@@ -1,0 +1,10 @@
+.git
+.gitignore
+.dockerignore
+.editorconfig
+.travis.yml
+CONTRIBUTE.md
+coverage
+Dockerfile
+README.md
+reports
