@@ -1,10 +1,9 @@
 # Concourse MQTT Resource
 
-![Status](https://img.shields.io/badge/status-in%20progress-red.svg)
-![GitHub last commit](https://img.shields.io/github/last-commit/concourse-resource/mqtt-resource.svg)
-[![Build Status](https://travis-ci.org/concourse-resources/mqtt-resource.svg?branch=master)](https://travis-ci.org/concourse-resources/mqtt-resource)
-[![dependencies Status](https://david-dm.org/concourse-resources/mqtt-resource/status.svg)](https://david-dm.org/concourse-resources/mqtt-resource)
-[![devDependencies Status](https://david-dm.org/concourse-resources/mqtt-resource/dev-status.svg)](https://david-dm.org/concourse-resources/mqtt-resource?type=dev) [![Greenkeeper badge](https://badges.greenkeeper.io/concourse-resources/mqtt-resource.svg)](https://greenkeeper.io/)
+![Status](https://img.shields.io/badge/status-ALPHA-blue.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/vergissberlin/mqtt-resource.svg)
+[![Build Status](https://travis-ci.org/vergissberlin/mqtt-resource.svg?branch=master)](https://travis-ci.org/vergissberlin/mqtt-resource)
+[![dependencies Status](https://david-dm.org/vergissberlins/mqtt-resource/status.svg)](https://david-dm.org/vergissberlins/mqtt-resource)
 
 > Send MQTT payloads to a topic from a MQTT broker.
 > Subscribing to MQTT topic to trigger jobs is not implemented yet.
@@ -42,7 +41,7 @@ resource_types:
 - name: mqtt-resource
   type: docker-image
   source:
-    repository: concourse-resources/mqtt-resource
+    repository: vergissberlins/mqtt-resource
 ```
 
 ## Behavior
@@ -72,7 +71,7 @@ resources:
 - name: git-mqtt-resource
   type: git
   source:
-    uri: git@github.com:concourse-resources/mqtt-resource.git
+    uri: git@github.com:vergissberlins/mqtt-resource.git
     branch: master
     private_key: {{private-repo-key}}
 
@@ -92,7 +91,7 @@ resource_types:
 - name: mqtt-resource
   type: docker-image
   source:
-    repository: concourse-resources/mqtt-resource
+    repository: vergissberlins/mqtt-resource
     tag: latest
 
 jobs:

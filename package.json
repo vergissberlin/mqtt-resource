@@ -10,7 +10,7 @@
     "test-report": "node node_modules/mocha/bin/mocha ./spec/ --async-only --reporter mocha-junit-reporter --reporter-options mochaFile=reports/junit/mocha.xml --exit",
     "test-report-html": "node node_modules/mocha/bin/mocha ./spec/ --async-only --reporter mocha-simple-html-reporter --reporter-options output=reports/mocha.html --exit",
     "test-report-coverage": "node ./node_modules/.bin/istanbul cover --report clover --dir reports/coverage src/*.js --exit",
-    "test-with-coverage": "node ./node_modules/.bin/istanbul cover _mocha --report lcovonly -- -R spec --exit && cat ./coverage/lcov.info | codacy-coverage && rm -rf ./coverage"
+    "test-with-coverage": "node ./node_modules/.bin/istanbul cover _mocha ./spec/ --async-only --exit --report lcovonly -- -R spec --exit && cat ./coverage/lcov.info | codacy-coverage && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "chai": "^4.1.2",
     "chai-integer": "^0.1.0",
     "chai-string": "^1.5.0",
+    "codacy-coverage": "^3.4.0",
     "istanbul": "^0.4.5",
     "mocha": "^6.1.4",
     "mocha-junit-reporter": "^1.22.0",
