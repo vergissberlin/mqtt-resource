@@ -6,6 +6,7 @@ module.exports = (input, callback) => {
 	const validate = require('./validate')
 	let error = null
 	let output = null
+	let receivedMessage
 
 	validate.sourceConfiguration(input, (validatedInput, thrownError) => {
 		input = validatedInput
@@ -35,20 +36,19 @@ module.exports = (input, callback) => {
 		})
 
 		client.on('message', (topic, message) => {
+			output = {
+				'version': {'ref': 'output'},
+				'metadata': [
+					{'name': 'message', 'value': input.params.payload.toString()},
+					{'name': 'receivedMessage', 'value': message.toString()},
+					{'name': 'qos', 'value': input.params.qos.toString()},
+					{'name': 'timestamp', 'value': Date.now().toString()},
+					{'name': 'topic', 'value': topic}
+				]
+			}
 			client.end()
+			callback(error, output)
 		})
 
-		output = {
-			'version': {'ref': 'output'},
-			'metadata': [
-				{'name': 'message', 'value': input.params.payload.toString()},
-				{'name': 'qos', 'value': input.params.qos.toString()},
-				{'name': 'timestamp', 'value': Date.now().toString()},
-				{'name': 'topic', 'value': input.source.topic}
-			]
-		}
 	}
-
-	callback(error, output)
-
 }

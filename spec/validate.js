@@ -4,7 +4,6 @@ const chai = require('chai')
 const expect = chai.expect
 
 const validate = require('../src/validate.js')
-const baseFileDir = process.cwd() + '/spec'
 const fixtureInput = require('./fixtures/input.json')
 
 /**

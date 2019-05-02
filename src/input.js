@@ -1,10 +1,9 @@
 'use strict'
 
 module.exports = (input, callback) => {
-	const mqtt = require('mqtt')
 	const validate = require('./validate')
 	let error = null
-	let output = null
+	let output
 
 	validate(input, (validatedInput, thrownError) => {
 		input = validatedInput
@@ -18,7 +17,6 @@ module.exports = (input, callback) => {
 			{'name': 'timestamp', 'value': Date.now().toString()}
 		]
 	}
-
 
 	callback(error, output, source)
 }

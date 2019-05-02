@@ -20,7 +20,6 @@ module.exports = (input, callback) => {
 
 		client.on('connect', () => {
 			let topic = input.source.prefix + '/' + process.env.BUILD_TEAM_NAME + '/' + process.env.BUILD_PIPELINE_NAME
-			console.log(topic)
 			client.subscribe(topic, (errorConnection) => {
 				if ( !errorConnection ) {
 					client.on('message', (topic, message) => {
