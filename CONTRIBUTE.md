@@ -1,17 +1,12 @@
 # Contribute
 
+|                  |               |
+| ---------------- | ------------- |
+| **Branch**       | development   |
+| **Code review**  | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/vergissberlin/mqtt-resource/badges/quality-score.png?b=development)](https://scrutinizer-ci.com/g/vergissberlin/mqtt-resource/?branch=development)  |
+
+
 ## Environment
-
-### Concourse ci
-
-1. Change to the `ci` directory `cd cd`
-2. Start a concourse ci test instance with vagrant `vagrant up`
-3. Install concourse ci cli tool with `make fly-osx` or `make fly-linux`
-4. Login to your concourse ci test instance `make login` (password: _changeme_)
-5. Create you own config file `cp resources/config.yml.example resources/config.yml` and configure your credentials
-6. Setup a test pipeline `make pipeline`
-7. Setup another test pipeline `make example`
-8. Unpause your pipelines `make unpause`
 
 ### Concourse resource
 
