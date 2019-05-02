@@ -6,14 +6,12 @@ resources:
 # Docker
 - name: docker-alpine
   type: docker-image
-  icon: docker
   source:
     repository: alpine
 
 # Others
 - name: mqtt-broker
   type: mqtt-resource
-  icon: cloud-outline
   source:
     url: mqtt://mqttbroker.andrelademann.de
     topic: project/alert

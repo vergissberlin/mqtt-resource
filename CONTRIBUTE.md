@@ -35,8 +35,16 @@ docker push vergissberlin/mqtt-resource
 
 ## Test pipeline
 
+### Setup Concourse CI and MQTT test server
+
 ```shell
-fly login -t local -c http://0.0.0.0:8080
+docker-compose -f spec/fixtures/docker-compose.yml up
+```
+
+### Set the pipeline
+
+```shell
+fly login -t local -c http://0.0.0.0:8010
 fly set-pipeline -t local -p mqtt-resource -c spec/fixtures/pipeline.yml -n
 fly -t local unpause-pipeline -p mqtt-resource
 ```
