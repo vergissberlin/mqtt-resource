@@ -6,7 +6,6 @@ module.exports = (input, callback) => {
 	const validate = require('./validate')
 	let error = null
 	let output = null
-	let receivedMessage
 
 	validate.sourceConfiguration(input, (validatedInput, thrownError) => {
 		input = validatedInput
@@ -47,8 +46,7 @@ module.exports = (input, callback) => {
 				]
 			}
 			client.end()
-			callback(error, output)
 		})
-
+		callback(error, output)
 	}
 }

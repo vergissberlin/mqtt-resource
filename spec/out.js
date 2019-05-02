@@ -4,7 +4,6 @@ const chai = require('chai')
 const expect = chai.expect
 
 const out = require('../src/out.js')
-const baseFileDir = process.cwd() + '/spec'
 const fixtureInput = require('./fixtures/input.json')
 
 /**
@@ -31,9 +30,10 @@ describe('out', () => {
 	describe('out', () => {
 		it('should not throw an error', (done) => {
 			out(this.input, (error) => {
-				expect(error).to.not.exist
+				expect(error).to.be.not.exist
 				done()
 			})
+
 		})
 
 	})
