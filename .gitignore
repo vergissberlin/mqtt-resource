@@ -3,11 +3,11 @@
 !/.dockerignore
 !/.gitignore
 !/.editorconfig
+!/.eslintrc.json
 !/.travis.yml
 !/check
 !/CONTRIBUTE.md
 !/Dockerfile
-!/check
 !/in
 !/out
 !/README.md

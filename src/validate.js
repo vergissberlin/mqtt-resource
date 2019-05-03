@@ -1,15 +1,13 @@
-'use strict'
-
-
 class Validate {
 
 	url (string) {
+		/*eslint no-useless-escape: 0*/
 		let regex = /(mqtt|mqtts|tcp|tls|ws|wss):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/
 		var pattern = new RegExp(regex)
 		return pattern.test(string)
 	}
 
-	sourceConfiguration(input, callback)  {
+	sourceConfiguration (input, callback) {
 
 		let error = null
 
@@ -48,7 +46,7 @@ class Validate {
 			if ( !error ) {
 				error = new Error('The parameter topic has not been set.')
 			}
-		} else if(input.params) {
+		} else if ( input.params ) {
 			input.source.topic = input.params.topic || input.source.topic
 		}
 
@@ -56,7 +54,7 @@ class Validate {
 	}
 
 
-	paramConfiguration(input, callback)  {
+	paramConfiguration (input, callback) {
 
 		let error = null
 

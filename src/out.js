@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = (input, callback) => {
 	const mqtt = require('mqtt')
 	const configuration = require('./configuration')

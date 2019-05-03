@@ -4,6 +4,8 @@
   "description": "Concourse MQTT Resource",
   "main": "out.js",
   "scripts": {
+    "lint": "node ./node_modules/.bin/eslint src/*.js spec/*.js",
+    "lint-fix": "node ./node_modules/.bin/eslint --fix src/*.js spec/*.js",
     "test": "node node_modules/mocha/bin/mocha ./spec/ --async-only --exit",
     "test-watch": "node node_modules/mocha/bin/mocha ./spec/ --async-only --watch --growl",
     "test-watch-debug": "DEBUG=mqtt-resource node node_modules/mocha/bin/mocha ./spec/ --async-only --watch --growl",
@@ -29,6 +31,8 @@
     "chai-string": "^1.5.0",
     "codacy-coverage": "^3.4.0",
     "dotenv": "^7.0.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-chai-expect": "^2.0.1",
     "istanbul": "^0.4.5",
     "mocha": "^6.1.4",
     "mocha-junit-reporter": "^1.22.0",

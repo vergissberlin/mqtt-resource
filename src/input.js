@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = (input, callback) => {
 	const validate = require('./validate')
 	let error = null
@@ -18,5 +16,5 @@ module.exports = (input, callback) => {
 		]
 	}
 
-	callback(error, output, source)
+	callback(error, output)
 }

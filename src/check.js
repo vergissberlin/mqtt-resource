@@ -1,9 +1,8 @@
-'use strict'
+const mqtt = require('mqtt')
+const validate = require('./validate')
+const configuration = require('./configuration')
 
 module.exports = (input, callback) => {
-	const mqtt = require('mqtt')
-	const validate = require('./validate')
-	const configuration = require('./configuration')
 	let error = null
 	let output = null
 
