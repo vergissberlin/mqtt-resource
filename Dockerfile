@@ -17,8 +17,6 @@ ENV CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN
 COPY . /opt/resource
 
 RUN npm install
-RUN npm run test &&\
-	npm run test-with-coverage
 
 RUN rm -rf \
     spec \

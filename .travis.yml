@@ -8,3 +8,5 @@ cache:
 branches:
   except:
   - version
+
+script: npm run test-with-coverage

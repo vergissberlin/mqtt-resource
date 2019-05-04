@@ -4,6 +4,18 @@
 
 const check = require('./src/check.js')
 
+/**
+ {
+	"source": {
+		"url": "...",
+		"username": "...",
+		"password": "..."
+		"prefix": "..."
+	},
+	"version": { "id": 1423 }
+ }
+ */
+
 
 /*
 BUILD_ID=3664
