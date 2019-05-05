@@ -9,4 +9,4 @@ branches:
   except:
   - version
 
-script: npm run test-with-coverage
+script: node ./node_modules/.bin/istanbul cover _mocha ./spec/ --async-only --exit --report lcovonly -- -R spec --exit && cat ./coverage/lcov.info | codacy-coverage --token $CODACY_PROJECT_TOKEN && rm -rf ./coverage
