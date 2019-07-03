@@ -7,7 +7,9 @@
 !/.travis.yml
 !/check
 !/CONTRIBUTE.md
+!/docker-compose.yml
 !/Dockerfile
+!/examples
 !/in
 !/out
 !/README.md

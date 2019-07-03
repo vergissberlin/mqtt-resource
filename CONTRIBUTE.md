@@ -5,7 +5,6 @@
 | **Branch**       | development   |
 | **Code review**  | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/vergissberlin/mqtt-resource/badges/quality-score.png?b=development)](https://scrutinizer-ci.com/g/vergissberlin/mqtt-resource/?branch=development)  |
 
-
 ## Environment
 
 ### Concourse resource
@@ -23,9 +22,15 @@
 
 ## Custom build
 
-```shell
-docker build --build-arg CODACY_PROJECT_TOKEN -t vergissberlin/mqtt-resource .
+```bash
+docker-compose build --build-arg CODACY_PROJECT_TOKEN
+docker-compose push
+docker-compose up -d
 docker push vergissberlin/mqtt-resource
+```
+
+```bash
+docker build -t vergissberlin/mqtt-resource:development . && docker push vergissberlin/mqtt-ressource:development
 ```
 
 ## Test pipeline
@@ -40,12 +45,56 @@ docker-compose -f spec/fixtures/docker-compose.yml up
 
 ```shell
 fly login -t local -c http://0.0.0.0:8010
-fly set-pipeline -t local -p mqtt-resource -c spec/fixtures/pipeline.yml -n
+fly set-pipeline -t local -p mqtt-resource -c examples/concourse/pipeline.yml -n
 fly -t local unpause-pipeline -p mqtt-resource
 ```
 
-## Debug pipeline
+### Destroy pipeline
+
+```
+fly -t local destroy-pipeline -p mqtt-resource
+```
+
+## Debug 
+
+Set ``debug: true`` in the pipeline at the source cobfiguration part.
+```yml
+resource_types:
+- name: mqtt-resource
+  type: docker-image
+  source:
+    repository: vergissberlin/mqtt-resource
+    tag: development
+    debug: true
+```
+
+### Pipeline
 
 ```shell
 fly hijack -t local -j mqtt-resource/test
+```
+
+### Listen MQTT messages
+
+#### With Docker
+```bash
+docker-compose exec mqtt mosquitto_sub -t 'test' -h 'test.mosoquitto.org'
+```
+
+#### With node
+```
+./node_modules/.bin/mqtt_sub -t 'test' -h 'test.mosoquitto.org'
+```
+
+
+### Send MQTT messages
+
+#### With Docker
+```
+docker-compose exec mqtt mosquitto_pub -t 'test' -h 'test.mosquitto.org' -m 'test message' -r
+```
+
+#### With node
+```
+./node_modules/.bin/mqtt_pub -t 'test' -h 'test.mosquitto.org' -m 'test message' -r
 ```

@@ -4,7 +4,7 @@ const chai = require('chai')
 const expect = chai.expect
 
 const validate = require('../src/validate.js')
-const fixtureInput = require('./fixtures/input.json')
+const fixtureConfiguration = require('./fixtures/configuration/defaults.json')
 
 /**
  * Test behavior
@@ -18,12 +18,12 @@ const fixtureInput = require('./fixtures/input.json')
 describe('validate', () => {
 
 	beforeEach((done) => {
-		this.input = JSON.parse(JSON.stringify(fixtureInput))
+		this.configuration = JSON.parse(JSON.stringify(fixtureConfiguration))
 		done()
 	})
 
 	afterEach((done) => {
-		delete this.input
+		delete this.configuration
 		done()
 	})
 
@@ -47,8 +47,8 @@ describe('validate', () => {
 
 	describe('source sourceConfiguration', () => {
 		it('throws an error when url is missing', (done) => {
-			delete this.input.source.url
-			validate.sourceConfiguration(this.input, (input, error) => {
+			delete this.configuration.source.url
+			validate.sourceConfiguration(this.configuration, (input, error) => {
 				expect(error).to.exist
 					.and.be.instanceof(Error)
 					.and.have.property('message', 'URL for MQTT broker has not been set.')
@@ -57,8 +57,8 @@ describe('validate', () => {
 		})
 
 		it('set default port when port is not set', (done) => {
-			delete this.input.source.port
-			validate.sourceConfiguration(this.input, (input, error) => {
+			delete this.configuration.source.port
+			validate.sourceConfiguration(this.configuration, (input, error) => {
 				expect(error).to.be.null
 				expect(input.source.port).to.be.equal(1883)
 				done()
@@ -66,8 +66,8 @@ describe('validate', () => {
 		})
 
 		it('set default port when port is not a number', (done) => {
-			this.input.source.port = 'holy cow'
-			validate.sourceConfiguration(this.input, (input, error) => {
+			this.configuration.source.port = 'holy cow'
+			validate.sourceConfiguration(this.configuration, (input, error) => {
 				expect(error).to.be.null
 				expect(input.source.port).to.be.equal(1883)
 				done()
@@ -75,8 +75,8 @@ describe('validate', () => {
 		})
 
 		it('set port from sourceConfiguration even when it is a string', (done) => {
-			this.input.source.port = '144'
-			validate.sourceConfiguration(this.input, (input, error) => {
+			this.configuration.source.port = '144'
+			validate.sourceConfiguration(this.configuration, (input, error) => {
 				expect(error).to.be.null
 				expect(input.source.port).to.be.equal(144)
 				done()
@@ -84,49 +84,29 @@ describe('validate', () => {
 		})
 
 		it('set port from sourceConfiguration even when it is a string', (done) => {
-			this.input.source.port = 144
-			validate.sourceConfiguration(this.input, (input, error)=> {
+			this.configuration.source.port = 144
+			validate.sourceConfiguration(this.configuration, (input, error)=> {
 				expect(error).to.be.null
 				expect(input.source.port).to.be.equal(144)
-				done()
-			})
-		})
-
-		it('throws an error when username is missing', (done) => {
-			delete this.input.source.username
-			validate.sourceConfiguration(this.input, (input, error) => {
-				expect(error).to.exist
-					.and.be.instanceof(Error)
-					.and.have.property('message', 'The user name for MQTT broker has not been set.')
-				done()
-			})
-		})
-
-		it('throws an error when password is missing', (done) => {
-			delete this.input.source.password
-			validate.sourceConfiguration(this.input, (input, error) => {
-				expect(error).to.be.not.null
-				expect(error).to.exist
-					.and.be.instanceof(Error)
-					.and.have.property('message', 'The password for MQTT broker has not been set.')
 				done()
 			})
 		})
 	})
 
 	describe('parameter sourceConfiguration', () => {
-		it('throws an error when all parameters are missing', (done) => {
-			delete this.input.params
-			validate.paramConfiguration(this.input, (input, error) => {
+		it('throws an error when topic is missing', (done) => {
+			delete this.configuration.params.topic
+			validate.paramConfiguration(this.configuration, (input, error) => {
 				expect(error).to.exist
 					.and.be.instanceof(Error)
-					.and.have.property('message', 'The parameters are not been set.')
+					.and.have.property('message', 'The parameter topic has not been set.')
 				done()
 			})
 		})
+
 		it('throws an error when payload is missing', (done) => {
-			delete this.input.params.payload
-			validate.paramConfiguration(this.input, (input, error) => {
+			delete this.configuration.params.payload
+			validate.paramConfiguration(this.configuration, (input, error) => {
 				expect(error).to.exist
 					.and.be.instanceof(Error)
 					.and.have.property('message', 'The parameter payload has not been set.')
@@ -135,8 +115,8 @@ describe('validate', () => {
 		})
 
 		it('converts payload also to strings', (done) => {
-			this.input.params.payload = 1.2
-			validate.paramConfiguration(this.input, (input, error) => {
+			this.configuration.params.payload = 1.2
+			validate.paramConfiguration(this.configuration, (input, error) => {
 				expect(error).to.not.exist
 				expect(input.params.payload).to.be.string
 				done()
@@ -144,41 +124,31 @@ describe('validate', () => {
 		})
 
 		it('sets default value for qos to 2', (done) => {
-			delete this.input.params.qos
-			validate.paramConfiguration(this.input, (input, error) => {
+			delete this.configuration.params.qos
+			validate.paramConfiguration(this.configuration, (input, error) => {
+				console.log(input.params.qos)
 				expect(error).to.be.null
-				expect(input.params.qos).to.be.equal(2)
-				done()
-			})
-		})
-	})
-
-	describe('override sourceConfiguration', () => {
-		it('is possible to override the topics with params', (done) => {
-			validate.sourceConfiguration(this.input, (input, error) => {
-				expect(error).to.be.null
-				expect(input.source.topic).to.be.equal('override/topic/from/params')
+				expect(input.params.qos).to.be.equal(1)
 				done()
 			})
 		})
 
-		it('is possible to set topic as source only', (done) => {
-			delete this.input.params.topic
-			validate.sourceConfiguration(this.input, (input, error) => {
+		it('sets default value if it is out of range', (done) => {
+			this.configuration.params.qos = 12
+			validate.paramConfiguration(this.configuration, (input, error) => {
+				console.log(input.params.qos)
 				expect(error).to.be.null
-				expect(input.source.topic).to.be.equal('topic/from/source')
+				expect(input.params.qos).to.be.equal(1)
 				done()
 			})
 		})
 
-		it('is possible to set topic as param only', (done) => {
-			delete this.input.source.topic
-			validate.sourceConfiguration(this.input, (input, error) => {
+		it('keeps the value for qos', (done) => {
+			validate.paramConfiguration(this.configuration, (input, error) => {
 				expect(error).to.be.null
-				expect(input.source.topic).to.be.equal('override/topic/from/params')
+				expect(input.params.qos).to.be.equal(1)
 				done()
 			})
 		})
-
 	})
 })

@@ -42,7 +42,6 @@ resources:
     url: mqtt://mybroker.eu
     username: xxxxx
     password: xxxxx
-    prefix: /topic/prefix/${BUILD_TEAM_NAME}/${BUILD_PIPELINE_NAME}
 ```
 
 ## Resource type configuration
@@ -96,7 +95,7 @@ resources:
   source:
     url: https://io.adafruit.com
     password: {{adafruit-password}}
-    topic: defaulttopic
+    topic: do/something
 
 resource_types:
 - name: mqtt-resource
@@ -113,7 +112,7 @@ jobs:
   - put: docker-mqtt-resource
   - put: mqtt
     params:
-      topic: overridetopic
+      topic: do/something
       payload: Release done
       qos: 2
 ```

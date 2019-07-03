@@ -4,7 +4,7 @@ const chai = require('chai')
 const expect = chai.expect
 
 const out = require('../src/out.js')
-const fixtureInput = require('./fixtures/input.json')
+const fixtureConfiguration = require('./fixtures/configuration/defaults.json')
 
 /**
  * Test behavior
@@ -18,23 +18,13 @@ const fixtureInput = require('./fixtures/input.json')
 describe('out', () => {
 
 	beforeEach((done) => {
-		this.input = JSON.parse(JSON.stringify(fixtureInput))
+		this.configuration = JSON.parse(JSON.stringify(fixtureConfiguration))
 		done()
 	})
 
 	afterEach((done) => {
-		delete this.input
+		delete this.configuration
 		done()
 	})
 
-	describe('out', () => {
-		it('should not throw an error', (done) => {
-			out(this.input, (error) => {
-				expect(error).to.be.not.exist
-				done()
-			})
-
-		})
-
-	})
 })

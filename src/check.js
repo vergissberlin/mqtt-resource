@@ -3,38 +3,41 @@ const validate = require('./validate')
 const configuration = require('./configuration')
 
 module.exports = (input, callback) => {
-	let error = null
-	let output = null
+	let error = null,
+		output = []
 
 	validate.sourceConfiguration(input, (validatedInput, thrownError) => {
 		input = validatedInput
 		error = thrownError
-	})
+	})clear
 
-	// Send MQTT
-	if ( !error ) {
+	if (!error) {
 		let configurationMqtt = configuration.mqtt(input)
 		let client = mqtt.connect(input.source.url, configurationMqtt)
-		let version = null
+		let version = 0
+		let topic = input.params.topics
 
 		client.on('connect', () => {
-			let topic = input.source.prefix + '/' + process.env.BUILD_TEAM_NAME + '/' + process.env.BUILD_PIPELINE_NAME
 			client.subscribe(topic, (errorConnection) => {
-				if ( !errorConnection ) {
+				if (!errorConnection) {
 					client.on('message', (topic, message) => {
 						version = message.toString()
-						client.end()
 					})
 				} else {
-					error = errorConnection
+					error = errorConnection.toString()
+					callback(error, output)
 				}
 			})
 		})
 
-		output = [
-			{'ref': version}
-		]
+		client.on('message', function (topic, message) {
+			if (message.toString() !== 'none') {
+				output.push({'message': message.toString()})
+			}
+			client.end()
+			callback(error, output)
+		})
+	} else {
+		callback(error, output)
 	}
-
-	callback(error, output)
 }

@@ -13,11 +13,9 @@ resources:
 - name: mqtt-broker
   type: mqtt-resource
   source:
-    url: mqtt://mqttbroker.andrelademann.de
-    topic: project/alert
-    prefix: project/trigger
-    username: vergissberlin
-    password: oJT9U7swNc7fS6E9SnfIqzKP
+    url: mqtt://test.mosquitto.org
+    port: 1883
+    topic: test
 
 #####################################################################################
 resource_types:
@@ -34,7 +32,6 @@ jobs:
 
 - name: test
   serial: true
-  build_logs_to_retain: 10
   plan:
   - aggregate:
     - get: docker-alpine
@@ -63,12 +60,14 @@ jobs:
     put: mqtt-broker
     params:
       payload: Release success
+      topic: test
   on_failure:
     put: mqtt-broker
     params:
-      topic: my/overridden/topic
       payload: Release failure
+      topic: test
   on_abort:
     put: mqtt-broker
     params:
       payload: Release aborted
+      topic: test

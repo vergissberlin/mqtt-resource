@@ -12,7 +12,7 @@ let putDir = process.argv[2]
 process.stdin.resume()
 process.stdin.setEncoding('utf8')
 process.stdin.on('data',  (data) => {
-	out(JSON.parse(data), putDir, (error, result) => {
+	out(JSON.parse(data), (error, result) => {
 		if ( error ) {
 			process.stderr.write(error.message)
 			process.exit(1)

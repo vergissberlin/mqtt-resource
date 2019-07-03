@@ -1,0 +1,12 @@
+{
+    "params": {
+        "topic": "do/something",
+        "payload": "The payload"
+    },
+    "source": {
+        "url": "mqtt://mqttbroker.sample.eu",
+        "port": "1883",
+        "username": "test",
+        "password": "test"
+    }
+}

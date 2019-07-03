@@ -1,9 +1,11 @@
+const mqtt = require('async-mqtt')
+const configuration = require('./configuration')
+const validate = require('./validate')
+
 module.exports = (input, callback) => {
-	const mqtt = require('mqtt')
-	const configuration = require('./configuration')
-	const validate = require('./validate')
+
 	let error = null
-	let output = null
+	let output = {}
 
 	validate.sourceConfiguration(input, (validatedInput, thrownError) => {
 		input = validatedInput
@@ -15,36 +17,38 @@ module.exports = (input, callback) => {
 	})
 
 	// Send MQTT
-	if ( !error ) {
+	if (!error) {
 		let configurationMqtt = configuration.mqtt(input)
 		let client = mqtt.connect(input.source.url, configurationMqtt)
 
-		client.on('connect', () => {
-			client.subscribe(input.source.topic, (errorConnection) => {
-				if ( !errorConnection ) {
-					client.publish(input.source.topic, input.params.payload, {
-						qos: input.params.qos,
-						retain: false
-					})
-				} else {
-					error = errorConnection
+		input.params.qos = 0
+		const sendMessage = async () => {
+			try {
+				await client.publish(
+					input.params.topic,
+					input.params.payload.toString()
+				)
+				output = {
+					'version': {'message': input.params.payload.toString()},
+					'metadata': [
+						{'name': 'ATC_EXTERNAL_URL', 'value': process.env.ATC_EXTERNAL_URL || 'not set'},
+						{'name': 'BUILD_ID', 'value': process.env.BUILD_ID || 'not set'},
+						{'name': 'BUILD_NAME', 'value': process.env.BUILD_NAME || 'not set'},
+						{'name': 'BUILD_PIPELINE_NAME', 'value': process.env.BUILD_PIPELINE_NAME || 'not set'},
+						{'name': 'BUILD_TEAM_NAME', 'value': process.env.BUILD_TEAM_NAME || 'not set'},
+						{'name': 'source.url', 'value': input.source.url || 'not set'},
+						{'name': 'source.port', 'value': input.source.port.toString() || 'not set'},
+						{'name': 'params.payload', 'value': input.params.payload || 'not set'},
+						{'name': 'params.topic', 'value': input.params.topic || 'not set'},
+						{'name': 'params.qos', 'value': input.params.qos.toString() || 'not set'}
+					]
 				}
-			})
-		})
-
-		client.on('message', (topic, message) => {
-			output = {
-				'version': {'ref': 'output'},
-				'metadata': [
-					{'name': 'message', 'value': input.params.payload.toString()},
-					{'name': 'receivedMessage', 'value': message.toString()},
-					{'name': 'qos', 'value': input.params.qos.toString()},
-					{'name': 'timestamp', 'value': Date.now().toString()},
-					{'name': 'topic', 'value': topic}
-				]
+				await client.end()
+				callback(error, output)
+			} catch (e) {
+				callback(e.stack, {})
 			}
-			client.end()
-		})
-		callback(error, output)
+		}
+		client.on('connect', sendMessage)
 	}
 }

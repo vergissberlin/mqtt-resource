@@ -6,7 +6,7 @@ chai.use(require('chai-integer'))
 chai.use(require('chai-string'))
 
 const configuration = require('../src/configuration.js')
-const fixtureInput = require('./fixtures/input.json')
+const fixtureDefaults = require('./fixtures/configuration/defaults.json')
 
 /**
  * Test behavior
@@ -18,23 +18,22 @@ const fixtureInput = require('./fixtures/input.json')
  * 3. Test callback to send status
  */
 describe('sourceConfiguration', () => {
+	describe('MQTT with configuration', () => {
+		let mqttConfig = configuration.mqtt(JSON.parse(JSON.stringify(fixtureDefaults)))
 
-	describe('MQTT', () => {
-		let mqttConfig = configuration.mqtt(JSON.parse(JSON.stringify(fixtureInput)))
 		it('has all properties defined', (done) => {
 			expect(mqttConfig.username).to.not.be.undefined
 			expect(mqttConfig.password).to.not.be.undefined
 			expect(mqttConfig.port).to.not.be.undefined
 			expect(mqttConfig.qos).to.not.be.undefined
-			expect(mqttConfig.will).to.be.undefined
 			done()
 		})
 		it('has the username as string', (done) => {
-			expect(mqttConfig.username).to.have.string('yourusername')
+			expect(mqttConfig.username).to.have.string('test')
 			done()
 		})
 		it('has the password as string', (done) => {
-			expect(mqttConfig.password).to.have.string('yourpassword')
+			expect(mqttConfig.password).to.have.string('test')
 			done()
 		})
 		it('has the port as integer', (done) => {
