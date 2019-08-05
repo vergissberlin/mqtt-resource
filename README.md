@@ -1,4 +1,4 @@
-# Concourse MQTT  Resource 
+# Concourse MQTT Resource
 
 ![Status](https://img.shields.io/badge/status-in%20progress-red.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/concourse-resource/mqtt-resource.svg)
@@ -9,10 +9,10 @@
 > Send MQTT payloads to a topic from a MQTT broker.
 > Subscribing to MQTT topic to trigger jobs is not implemented yet.
 
-Quick Example
--------------
+## Quick Example
 
 ### Send MQTT
+
 ```yaml
 - name: update-mqtt
   plan:
@@ -22,8 +22,7 @@ Quick Example
       topic: mytopic
 ```
 
-Source Configuration
---------------------
+## Source configuration
 
 ```yaml
 resources:
@@ -34,8 +33,7 @@ resources:
     password: xxxxx
 ```
 
-Resource Type Configuration
----------------------------
+## Resource type configuration
 
 ```yaml
 resource_types:
@@ -45,27 +43,27 @@ resource_types:
     repository: concourse-resources/mqtt-resource
 ```
 
-Behavior
---------
+## Behavior
 
 ### `in`: _Not implemented yet_
-
 
 ### `out`: Creates, updates and transitions a MQTT topic
 
 #### Parameters
 
 * `payload`: The payload for the MQTT topic
+
 ```yaml
 payload: The build was successfully
 ```
+
 * `topic`: Override the topic if you want.
+
 ```yaml
 topic: other/topic/to/publish
 ```
 
-Real world example
-------------------
+## Real world example
 
 ```yaml
 resources:
@@ -79,7 +77,7 @@ resources:
 - name: docker-mqtt-resource
   type: docker
   source:
-    uri: 
+    uri:
 
 - name: mqtt
   type: mqtt-resource

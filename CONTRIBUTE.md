@@ -20,7 +20,7 @@
 3. Run the tests with a change watcher `npm run test-watch`
 4. Run the tests with a change watcher and debugger `npm run test-watch-debug`
 
-## Contribute
+## Make code changes
 
 1. Make a fork
 2. Run all tests
@@ -28,13 +28,13 @@
 
 ## Custom build
 
-```
+```shell
 docker build -t concourse-resources/mqtt-resource .
 ```
 
 ## Test pipeline
 
-```
+```shell
 fly login -t local -c http://0.0.0.0:8080
 fly set-pipeline -t local -p mqtt-resource -c spec/fixtures/pipeline.yml -n
 fly -t local unpause-pipeline -p mqtt-resource
