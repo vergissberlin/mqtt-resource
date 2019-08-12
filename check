@@ -10,7 +10,8 @@ process.env.DEBUG = '*'
 process.stdin.resume()
 process.stdin.setEncoding('utf8')
 process.stdin.on('data',  (data) => {
-	// process.stdout.write(JSON.stringify({'version': {'ref': Date.now().toString()}}))
+	process.stdout.write(JSON.stringify([]))
+	/*
 	check (JSON.parse(data), (error, result) => {
 		if ( error ) {
 			process.stderr.write(error.message)
@@ -19,4 +20,5 @@ process.stdin.on('data',  (data) => {
 		process.stdout.write(JSON.stringify(result))
 		process.exit(0)
 	})
+	*/
 })

@@ -9,7 +9,7 @@ module.exports = (input, callback) => {
 	validate.sourceConfiguration(input, (validatedInput, thrownError) => {
 		input = validatedInput
 		error = thrownError
-	})clear
+	})
 
 	if (!error) {
 		let configurationMqtt = configuration.mqtt(input)

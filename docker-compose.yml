@@ -1,29 +1,33 @@
 version: '3.5'
 
 services:
-  concourse-db:
+  db:
     image: postgres
     environment:
-      POSTGRES_DB: concourse
-      POSTGRES_PASSWORD: concourse_pass
-      POSTGRES_USER: concourse_user
-      PGDATA: /database
+      - POSTGRES_DB=concourse
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=user
+      - PGDATA=/database
 
   concourse:
-    image: concourse/concourse:5.0
+    image: concourse/concourse
     command: quickstart
     privileged: true
-    depends_on: [concourse-db]
-    ports: ["8010:8080"]
+    depends_on:
+      - db
+    ports:
+      - "8010:8080"
     environment:
-      CONCOURSE_POSTGRES_HOST: concourse-db
-      CONCOURSE_POSTGRES_USER: concourse_user
-      CONCOURSE_POSTGRES_PASSWORD: concourse_pass
-      CONCOURSE_POSTGRES_DATABASE: concourse
-      CONCOURSE_EXTERNAL_URL: http://0.0.0.0:8010
-      CONCOURSE_ADD_LOCAL_USER: test:test
-      CONCOURSE_MAIN_TEAM_LOCAL_USER: test
-    volumes: ["concourse-keys:/concourse-keys"]
+      - CONCOURSE_POSTGRES_HOST=db
+      - CONCOURSE_POSTGRES_USER=user
+      - CONCOURSE_POSTGRES_PASSWORD=password
+      - CONCOURSE_POSTGRES_DATABASE=concourse
+      - CONCOURSE_EXTERNAL_URL
+      - CONCOURSE_ADD_LOCAL_USER=test:test
+      - CONCOURSE_MAIN_TEAM_LOCAL_USER=test
+      - CONCOURSE_EXTERNAL_URL=http://0.0.0.0:8010
+    volumes:
+      - "concourse-keys:/concourse-keys"
 
   mqtt:
     image: eclipse-mosquitto

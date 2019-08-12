@@ -9,7 +9,7 @@
 
 ### Concourse resource
 
-1. Install all dependencies `npm install` and `sudo gem install terminal-notifier` (for OSX notifications)
+1. Install all dependencies `npm install` and `sudo gem install terminal-notifier` (for macOS notifications)
 2. Run the tests `npm test`
 3. Run the tests with a change watcher `npm run test-watch`
 4. Run the tests with a change watcher and debugger `npm run test-watch-debug`
@@ -30,7 +30,7 @@ docker push vergissberlin/mqtt-resource
 ```
 
 ```shell
-docker build -t vergissberlin/mqtt-resource:development . && docker push vergissberlin/mqtt-ressource:development
+docker build -t vergissberlin/mqtt-resource:development . && docker push vergissberlin/mqtt-resource:development
 ```
 
 ## Test pipeline
@@ -38,7 +38,7 @@ docker build -t vergissberlin/mqtt-resource:development . && docker push vergiss
 ### Setup Concourse CI and MQTT test server
 
 ```shell
-docker-compose -f spec/fixtures/docker-compose.yml up
+docker-compose up -d
 ```
 
 ### Set the pipeline
@@ -80,7 +80,8 @@ fly hijack -t local -j mqtt-resource/test
 #### With Docker
 
 ```shell
-docker-compose exec mqtt mosquitto_sub -t 'test' -h 'test.mosoquitto.org'
+docker-compose exec mqtt mosquitto_sub -t 'test' -h 'localhost'
+docker run -it eclipse-mosquitto mosquitto_sub -t 'test' -h 'test.mosquitto.org'
 ```
 
 #### With node
@@ -95,6 +96,7 @@ docker-compose exec mqtt mosquitto_sub -t 'test' -h 'test.mosoquitto.org'
 
 ```shell
 docker-compose exec mqtt mosquitto_pub -t 'test' -h 'test.mosquitto.org' -m 'test message' -r
+docker run eclipse-mosquitto mosquitto_pub -t 'test' -h 'test.mosquitto.org' -m 'test message' -r
 ```
 
 #### Send MQTT messages with node

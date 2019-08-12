@@ -30,13 +30,11 @@ resource_types:
 #####################################################################################
 jobs:
 
-- name: test
+- name: example
   serial: true
   plan:
-  - aggregate:
+  - in_parallel:
     - get: docker-alpine
-      trigger: true
-    - get: mqtt-broker
       trigger: true
   - task: test
     privileged: true
@@ -56,6 +54,24 @@ jobs:
         - -exc
         - |
           echo "Hello World"
+          echo "This is MQTT content" > out/message
+  - task: output
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: alpine
+      inputs:
+      - name: out
+      outputs:
+      - name: out
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          cat out/message
   on_success:
     put: mqtt-broker
     params:
@@ -65,6 +81,11 @@ jobs:
     put: mqtt-broker
     params:
       payload: Release failure
+      topic: test
+  on_error:
+    put: mqtt-broker
+    params:
+      payload: Release error
       topic: test
   on_abort:
     put: mqtt-broker

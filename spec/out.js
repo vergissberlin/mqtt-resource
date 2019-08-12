@@ -26,5 +26,4 @@ describe('out', () => {
 		delete this.configuration
 		done()
 	})
-
 })
