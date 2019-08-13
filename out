@@ -7,8 +7,6 @@ process.env.DEBUG = '*'
 
 const out = require('./src/out.js')
 
-let putDir = process.argv[2]
-
 process.stdin.resume()
 process.stdin.setEncoding('utf8')
 process.stdin.on('data',  (data) => {

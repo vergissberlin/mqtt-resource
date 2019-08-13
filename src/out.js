@@ -34,11 +34,10 @@ module.exports = (input, callback) => {
 				)
 				output = {
 					'version': {
-						'ref': 'none',
+						'ref': client.getLastMessageId().toString() ||  'none',
 						'message': input.params.payload.toString()
 					},
 					'metadata': [
-						{'name': 'MQTT_LAST_MESSAGE_ID', 'value': client.getLastMessageId().toString() || 'not set'},
 						{'name': 'ATC_EXTERNAL_URL', 'value': process.env.ATC_EXTERNAL_URL || 'not set'},
 						{'name': 'BUILD_ID', 'value': process.env.BUILD_ID || 'not set'},
 						{'name': 'BUILD_NAME', 'value': process.env.BUILD_NAME || 'not set'},
@@ -47,6 +46,7 @@ module.exports = (input, callback) => {
 						{'name': 'BUILD_PIPELINE_NAME', 'value': process.env.BUILD_PIPELINE_NAME || 'not set'},
 						{'name': 'BUILD_PIPELINE_ID', 'value': process.env.BUILD_PIPELINE_ID || 'not set'},
 						{'name': 'BUILD_TEAM_NAME', 'value': process.env.BUILD_TEAM_NAME || 'not set'},
+						{'name': 'MQTT_LAST_MESSAGE_ID', 'value': client.getLastMessageId().toString() || 'not set'},
 						{'name': 'source.url', 'value': input.source.url || 'not set'},
 						{'name': 'source.port', 'value': input.source.port.toString() || 'not set'},
 						{'name': 'params.payload', 'value': input.params.payload || 'not set'},

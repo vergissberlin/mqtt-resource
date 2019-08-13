@@ -7,6 +7,10 @@ const input = require('./src/input.js')
 // This must be set BEFORE out.js is required for the debug info to show up
 process.env.DEBUG = '*'
 
+// ARGS
+// ["/usr/bin/node","/opt/resource/out","/tmp/build/put"]
+// let putDir = process.argv[2]
+
 process.stdin.resume()
 process.stdin.setEncoding('utf8')
 process.stdin.on('data', (data) => {
