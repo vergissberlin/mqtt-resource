@@ -9,16 +9,16 @@
 
 ### Concourse resource
 
-1. Install all dependencies `npm install` and `sudo gem install terminal-notifier` (for macOS notifications)
-2. Run the tests `npm test`
-3. Run the tests with a change watcher `npm run test-watch`
-4. Run the tests with a change watcher and debugger `npm run test-watch-debug`
+1.  Install all dependencies `npm install` and `sudo gem install terminal-notifier` (for macOS notifications)
+2.  Run the tests `npm test`
+3.  Run the tests with a change watcher `npm run test-watch`
+4.  Run the tests with a change watcher and debugger `npm run test-watch-debug`
 
 ## Make code changes
 
-1. Make a fork
-2. Run all tests
-3. Create a pull request
+1.  Make a fork
+2.  Run all tests
+3.  Create a pull request
 
 ## Custom build
 

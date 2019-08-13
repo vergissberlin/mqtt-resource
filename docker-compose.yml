@@ -43,6 +43,8 @@ services:
   mqtt-resource:
     build: .
     image: vergissberlin/mqtt-resource:development
+    environment:
+    - CODACY_PROJECT_TOKEN
 
 volumes:
   concourse-keys:
