@@ -26,7 +26,7 @@ module.exports = (input, callback) => {
 		let configurationMqtt = configuration.mqtt(input)
 		let client = mqtt.connect(input.source.url, configurationMqtt)
 		input.params.qos = 0
-		const sendMessage = async () => {
+		const sendMessage = (async () => {
 			try {
 				await client.publish(
 					input.params.topic,
@@ -34,7 +34,7 @@ module.exports = (input, callback) => {
 				)
 				output = {
 					'version': {
-						'ref': client.getLastMessageId().toString() ||  'none',
+						'ref': client.getLastMessageId().toString() || 'none',
 						'message': input.params.payload.toString()
 					},
 					'metadata': [
@@ -59,7 +59,7 @@ module.exports = (input, callback) => {
 			} catch (e) {
 				callback(e.stack, {})
 			}
-		}
+		})()
 		client.on('connect', sendMessage)
 	}
 }

@@ -42,7 +42,7 @@
     "request-debug": "^0.2.0"
   },
   "dependencies": {
-    "async-mqtt": "^2.2.1",
+    "async-mqtt": "^2.4.0",
     "debug": "^4.1.0",
     "docker-container-id": "^1.0.1",
     "mqtt": "^2.18.8"
