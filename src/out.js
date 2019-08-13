@@ -1,100 +1,65 @@
-'use strict'
+const mqtt = require('async-mqtt')
+const configuration = require('./configuration')
+const validate = require('./validate')
 
+module.exports = (input, callback) => {
 
-module.exports = (input, baseFileDir, callback) => {
-	const mqtt = require('mqtt')
-	const source = input.source
-	const params = input.params
 	let error = null
-	let output = null
+	let output = {}
 
+	validate.sourceConfiguration(input, (validatedInput, thrownError) => {
+		input = validatedInput
+		error = thrownError
+	})
+	validate.paramConfiguration(input, (validatedInput, thrownError) => {
+		input = validatedInput
+		error = thrownError
+	})
 
-	// Validate configuration
-	if ( !source.url ) {
-		if ( !error ) {
-			error = new Error('URL for MQTT broker has not been set.')
-		}
-	}
-
-	if ( !source.port ) {
-		if ( !error ) {
-
-		}
-	}
-
-	let port = Number.parseInt(source.port)
-	if ( Number.isNaN(port) ) {
-		source.port = 1883
-	} else {
-		source.port = port
-	}
-
-	if ( !source.username ) {
-		if ( !error ) {
-			error = new Error('The user name for MQTT broker has not been set.')
-		}
-	}
-
-	if ( !source.password ) {
-		if ( !error ) {
-			error = new Error('The password for MQTT broker has not been set.')
-		}
-	}
-
-	if ( !source.topic && !params.topic ) {
-		if ( !error ) {
-			error = new Error('The parameter topic has not been set.')
-		}
-	} else if ( params.topic ) {
-		source.topic = params.topic
-	}
-
-	if ( !params.payload ) {
-		if ( !error ) {
-			error = new Error('The parameter payload has not been set.')
-		}
-	} else {
-		params.payload.toString()
-	}
-
-	if ( ![0, 1, 2].includes(params.qos) ) {
-		params.qos = 0
-	}
+	// if file exist do:
+	//   message = require('fs').readFile('/tmp/build/put/out/message', (err,buf) => { process.stdout.write(buf)})
+	// endif
+	// 	{'name': 'pwd', 'value': process.cwd()},
 
 	// Send MQTT
-	if ( !error ) {
-		let options = {
-			username: source.username,
-			password: source.password,
-			port: source.port,
-			qos: params.qos,
-			will: {
-				topic: source.topic,
-				payload: params.payload
+	if (!error) {
+		let configurationMqtt = configuration.mqtt(input)
+		let client = mqtt.connect(input.source.url, configurationMqtt)
+		input.params.qos = 0
+		const sendMessage = async () => {
+			try {
+				await client.publish(
+					input.params.topic,
+					input.params.payload.toString()
+				)
+				output = {
+					'version': {
+						'ref': client.getLastMessageId().toString() ||  'none',
+						'message': input.params.payload.toString()
+					},
+					'metadata': [
+						{'name': 'ATC_EXTERNAL_URL', 'value': process.env.ATC_EXTERNAL_URL || 'not set'},
+						{'name': 'BUILD_ID', 'value': process.env.BUILD_ID || 'not set'},
+						{'name': 'BUILD_NAME', 'value': process.env.BUILD_NAME || 'not set'},
+						{'name': 'BUILD_JOB_NAME', 'value': process.env.BUILD_JOB_NAME || 'not set'},
+						{'name': 'BUILD_JOB_ID', 'value': process.env.BUILD_JOB_ID || 'not set'},
+						{'name': 'BUILD_PIPELINE_NAME', 'value': process.env.BUILD_PIPELINE_NAME || 'not set'},
+						{'name': 'BUILD_PIPELINE_ID', 'value': process.env.BUILD_PIPELINE_ID || 'not set'},
+						{'name': 'BUILD_TEAM_NAME', 'value': process.env.BUILD_TEAM_NAME || 'not set'},
+						{'name': 'MQTT_LAST_MESSAGE_ID', 'value': client.getLastMessageId().toString() || 'not set'},
+						{'name': 'source.url', 'value': input.source.url || 'not set'},
+						{'name': 'source.port', 'value': input.source.port.toString() || 'not set'},
+						{'name': 'params.payload', 'value': input.params.payload || 'not set'},
+						{'name': 'params.topic', 'value': input.params.topic || 'not set'},
+						{'name': 'params.qos', 'value': input.params.qos.toString() || 'not set'}
+					]
+				}
+				await client.end()
+				callback(error, output)
+			} catch (e) {
+				callback(e.stack, {})
 			}
 		}
-
-		let client = mqtt.connect(source.url, options)
-
-		client.on('connect', () => {
-			client.subscribe(source.topic, (errorConnection) => {
-				if ( !errorConnection ) {
-					client.publish(source.topic, params.payload, {
-						qos: params.qos,
-						retain: false
-					})
-				} else {
-					error = errorConnection
-				}
-			})
-		})
-
-		client.on('message', (topic, message) => {
-			output = message.toString()
-			client.end()
-		})
+		client.on('connect', sendMessage)
 	}
-
-	callback(error, output, source, params)
-
 }

@@ -1,10 +1,14 @@
-# Concourse MQTT Resource
+# Concourse MQTT Resource  [![Twitter](https://img.shields.io/twitter/url/https/github.com/vergissberlin/mqtt-resource.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fvergissberlin%2Fmqtt-resource)
 
-![Status](https://img.shields.io/badge/status-in%20progress-red.svg)
-![GitHub last commit](https://img.shields.io/github/last-commit/concourse-resource/mqtt-resource.svg)
-[![Build Status](https://travis-ci.org/concourse-resources/mqtt-resource.svg?branch=master)](https://travis-ci.org/concourse-resources/mqtt-resource)
-[![dependencies Status](https://david-dm.org/concourse-resources/mqtt-resource/status.svg)](https://david-dm.org/concourse-resources/mqtt-resource)
-[![devDependencies Status](https://david-dm.org/concourse-resources/mqtt-resource/dev-status.svg)](https://david-dm.org/concourse-resources/mqtt-resource?type=dev) [![Greenkeeper badge](https://badges.greenkeeper.io/concourse-resources/mqtt-resource.svg)](https://greenkeeper.io/)
+![GitHub release](https://img.shields.io/github/release/vergissberlin/mqtt-resource.svg)
+![GitHub release](https://img.shields.io/github/release-pre/vergissberlin/mqtt-resource.svg)
+[![Build Status](https://travis-ci.org/vergissberlin/mqtt-resource.svg?branch=master)](https://travis-ci.org/vergissberlin/mqtt-resource)
+![Docker Build Status](https://img.shields.io/docker/build/vergissberlin/mqtt-resource.svg)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/vergissberlin/mqtt-resource/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/vergissberlin/mqtt-resource/?branch=master)
+[![dependencies Status](https://david-dm.org/vergissberlins/mqtt-resource/status.svg)](https://david-dm.org/vergissberlins/mqtt-resource)
+![GitHub last commit](https://img.shields.io/github/last-commit/vergissberlin/mqtt-resource.svg)
+[![GitHub issues](https://img.shields.io/github/issues/vergissberlin/mqtt-resource.svg)](https://github.com/vergissberlin/mqtt-resource/issues)
+![Docker Pulls](https://img.shields.io/docker/pulls/vergissberlin/mqtt-resource.svg)
 
 > Send MQTT payloads to a topic from a MQTT broker.
 > Subscribing to MQTT topic to trigger jobs is not implemented yet.
@@ -29,7 +33,8 @@ resources:
 - name: mqtt
   type: mqtt-resource
   source:
-    url: https://mqttbroker.sample
+    url: mqtt://mybroker.eu
+    username: xxxxx
     password: xxxxx
 ```
 
@@ -40,7 +45,7 @@ resource_types:
 - name: mqtt-resource
   type: docker-image
   source:
-    repository: concourse-resources/mqtt-resource
+    repository: vergissberlins/mqtt-resource
 ```
 
 ## Behavior
@@ -70,27 +75,27 @@ resources:
 - name: git-mqtt-resource
   type: git
   source:
-    uri: git@github.com:concourse-resources/mqtt-resource.git
+    uri: git@github.com:vergissberlins/mqtt-resource.git
     branch: master
     private_key: {{private-repo-key}}
 
 - name: docker-mqtt-resource
   type: docker
   source:
-    uri:
+    repository: hulk/bigthing
 
 - name: mqtt
   type: mqtt-resource
   source:
     url: https://io.adafruit.com
     password: {{adafruit-password}}
-    topic: defaulttopic
+    topic: do/something
 
 resource_types:
 - name: mqtt-resource
   type: docker-image
   source:
-    repository: concourse-resources/mqtt-resource
+    repository: vergissberlins/mqtt-resource
     tag: latest
 
 jobs:
@@ -101,7 +106,7 @@ jobs:
   - put: docker-mqtt-resource
   - put: mqtt
     params:
-      topic: overridetopic
+      topic: do/something
       payload: Release done
       qos: 2
 ```

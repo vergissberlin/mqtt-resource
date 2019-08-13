@@ -1,8 +1,20 @@
-'use strict'
-
 module.exports = (input, callback) => {
-	const source = input.source
+	const validate = require('./validate')
 	let error = null
-	let output = null
-	callback(error, output, source)
+	let output
+
+	validate(input, (validatedInput, thrownError) => {
+		input = validatedInput
+		error = thrownError
+	})
+
+	output = {
+		'version': {'ref': 'input'},
+		'metadata': [
+			{'name': 'topic', 'value': 'Hulk Hogan'},
+			{'name': 'timestamp', 'value': Date.now().toString()}
+		]
+	}
+
+	callback(error, output)
 }

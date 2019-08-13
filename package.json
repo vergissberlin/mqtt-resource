@@ -4,13 +4,15 @@
   "description": "Concourse MQTT Resource",
   "main": "out.js",
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha ./spec/ --async-only",
+    "lint": "node ./node_modules/.bin/eslint src/*.js spec/*.js",
+    "lint-fix": "node ./node_modules/.bin/eslint --fix src/*.js spec/*.js",
+    "test": "node node_modules/mocha/bin/mocha ./spec/ --async-only --exit",
     "test-watch": "node node_modules/mocha/bin/mocha ./spec/ --async-only --watch --growl",
     "test-watch-debug": "DEBUG=mqtt-resource node node_modules/mocha/bin/mocha ./spec/ --async-only --watch --growl",
-    "test-report": "node node_modules/mocha/bin/mocha ./spec/ --async-only --reporter mocha-junit-reporter --reporter-options mochaFile=reports/junit/mocha.xml",
-    "test-report-html": "node node_modules/mocha/bin/mocha ./spec/ --async-only --reporter mocha-simple-html-reporter --reporter-options output=reports/mocha.html",
-    "test-report-coverage": "node ./node_modules/.bin/istanbul cover --report clover --dir reports/coverage src/*.js",
-    "test-with-coverage": "node ./node_modules/.bin/istanbul cover _mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | codacy-coverage && rm -rf ./coverage"
+    "test-report": "node node_modules/mocha/bin/mocha ./spec/ --async-only --reporter mocha-junit-reporter --reporter-options mochaFile=reports/junit/mocha.xml --exit",
+    "test-report-html": "node node_modules/mocha/bin/mocha ./spec/ --async-only --reporter mocha-simple-html-reporter --reporter-options output=reports/mocha.html --exit",
+    "test-report-coverage": "node ./node_modules/.bin/istanbul cover --report clover --dir reports/coverage src/*.js --exit",
+    "test-with-coverage": "node ./node_modules/.bin/istanbul cover _mocha ./spec/ --async-only --exit --report lcovonly -- -R spec --exit && cat ./coverage/lcov.info | codacy-coverage --token 446bf6c62a1f4b8294a03fd6ba514efe && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
@@ -23,18 +25,26 @@
   },
   "homepage": "https://github.com/concourse-resources/mqtt-resource#readme",
   "devDependencies": {
-    "async": "^2.6.2",
+    "async": "^2.6.3",
     "chai": "^4.1.2",
+    "chai-integer": "^0.1.0",
+    "chai-string": "^1.5.0",
+    "codacy-coverage": "^3.4.0",
+    "dotenv": "^7.0.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-chai-expect": "^2.0.1",
     "istanbul": "^0.4.5",
-    "mocha": "^6.1.4",
-    "mocha-junit-reporter": "^1.22.0",
+    "mocha": "^6.2.0",
+    "mocha-junit-reporter": "^1.23.1",
     "mocha-lcov-reporter": "^1.3.0",
     "mocha-simple-html-reporter": "^1.1.0",
     "nock": "^10.0.6",
     "request-debug": "^0.2.0"
   },
   "dependencies": {
+    "async-mqtt": "^2.2.1",
     "debug": "^4.1.0",
+    "docker-container-id": "^1.0.1",
     "mqtt": "^2.18.8"
   }
 }

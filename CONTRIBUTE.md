@@ -1,21 +1,15 @@
 # Contribute
 
+| context          | value                                                      |
+| ---------------- | ---------------------------------------------------------- |
+| **Branch**       | development                                                |
+| **Code review**  | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/vergissberlin/mqtt-resource/badges/quality-score.png?b=development)](https://scrutinizer-ci.com/g/vergissberlin/mqtt-resource/?branch=development)  |
+
 ## Environment
-
-### Concourse ci
-
-1. Change to the `ci` directory `cd cd`
-2. Start a concourse ci test instance with vagrant `vagrant up`
-3. Install concourse ci cli tool with `make fly-osx` or `make fly-linux`
-4. Login to your concourse ci test instance `make login` (password: _changeme_)
-5. Create you own config file `cp resources/config.yml.example resources/config.yml` and configure your credentials
-6. Setup a test pipeline `make pipeline`
-7. Setup another test pipeline `make example`
-8. Unpause your pipelines `make unpause`
 
 ### Concourse resource
 
-1. Install all dependencies `npm install` and `sudo gem install terminal-notifier` (for OSX notifications)
+1. Install all dependencies `npm install` and `sudo gem install terminal-notifier` (for macOS notifications)
 2. Run the tests `npm test`
 3. Run the tests with a change watcher `npm run test-watch`
 4. Run the tests with a change watcher and debugger `npm run test-watch-debug`
@@ -29,13 +23,84 @@
 ## Custom build
 
 ```shell
-docker build -t concourse-resources/mqtt-resource .
+docker-compose build --build-arg CODACY_PROJECT_TOKEN
+docker-compose push
+docker-compose up -d
+docker push vergissberlin/mqtt-resource
+```
+
+```shell
+docker build -t vergissberlin/mqtt-resource:development . && docker push vergissberlin/mqtt-resource:development
 ```
 
 ## Test pipeline
 
+### Setup Concourse CI and MQTT test server
+
 ```shell
-fly login -t local -c http://0.0.0.0:8080
-fly set-pipeline -t local -p mqtt-resource -c spec/fixtures/pipeline.yml -n
+docker-compose up -d
+```
+
+### Set the pipeline
+
+```shell
+fly login -t local -c http://0.0.0.0:8010
+fly set-pipeline -t local -p mqtt-resource -c examples/concourse/pipeline.yml -n
 fly -t local unpause-pipeline -p mqtt-resource
+```
+
+### Destroy pipeline
+
+```shell
+fly -t local destroy-pipeline -p mqtt-resource
+```
+
+## Debug
+
+Set ``debug: true`` in the pipeline at the source cobfiguration part.
+
+```yml
+resource_types:
+- name: mqtt-resource
+  type: docker-image
+  source:
+    repository: vergissberlin/mqtt-resource
+    tag: development
+    debug: true
+```
+
+### Pipeline
+
+```shell
+fly hijack -t local -j mqtt-resource/test
+```
+
+### Listen MQTT messages
+
+#### With Docker
+
+```shell
+docker-compose exec mqtt mosquitto_sub -t 'test' -h 'localhost'
+docker run -it eclipse-mosquitto mosquitto_sub -t 'test' -h 'test.mosquitto.org'
+```
+
+#### With node
+
+```shell
+./node_modules/.bin/mqtt_sub -t 'test' -h 'test.mosoquitto.org'
+```
+
+### Send MQTT messages
+
+#### Send MQTT messages with Docker
+
+```shell
+docker-compose exec mqtt mosquitto_pub -t 'test' -h 'test.mosquitto.org' -m 'test message' -r
+docker run eclipse-mosquitto mosquitto_pub -t 'test' -h 'test.mosquitto.org' -m 'test message' -r
+```
+
+#### Send MQTT messages with node
+
+```shell
+./node_modules/.bin/mqtt_pub -t 'test' -h 'test.mosquitto.org' -m 'test message' -r
 ```

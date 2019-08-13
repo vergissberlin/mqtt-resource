@@ -1,0 +1,41 @@
+{
+    "env": {
+        "browser": false,
+        "commonjs": true,
+        "es6": true,
+        "mocha": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly",
+        "process": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "plugins": [
+        "chai-expect"
+    ],
+    "rules": {
+        "chai-expect/missing-assertion": 2,
+        "chai-expect/terminating-properties": 1,
+        "indent": [
+            "error",
+            "tab"
+        ],
+        "semi": [
+            "error",
+            "never"
+        ],
+        "no-extra-semi": 1,
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ]
+    }
+}

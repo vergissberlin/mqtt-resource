@@ -8,3 +8,7 @@ cache:
 branches:
   except:
   - version
+
+script:
+    - npm test
+    - node ./node_modules/.bin/istanbul cover mocha ./spec/ --async-only --exit --report lcovonly -- -R spec --exit && cat ./coverage/lcov.info | codacy-coverage --token $CODACY_PROJECT_TOKEN && rm -rf ./coverage

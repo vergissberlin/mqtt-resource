@@ -1,3 +1,24 @@
-#!/bin/bash
+#!/usr/bin/node
 
-echo "[]"
+'use strict'
+
+const check = require('./src/check.js')
+
+// This must be set BEFORE out.js is required for the debug info to show up
+process.env.DEBUG = '*'
+
+process.stdin.resume()
+process.stdin.setEncoding('utf8')
+process.stdin.on('data',  (data) => {
+	process.stdout.write(JSON.stringify([]))
+	/*
+	check (JSON.parse(data), (error, result) => {
+		if ( error ) {
+			process.stderr.write(error.message)
+			process.exit(1)
+		}
+		process.stdout.write(JSON.stringify(result))
+		process.exit(0)
+	})
+	*/
+})

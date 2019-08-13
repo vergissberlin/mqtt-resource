@@ -13,11 +13,9 @@ resources:
 - name: mqtt-broker
   type: mqtt-resource
   source:
-    url: mqtt://mqttbroker.andrelademann.de
-    topic: project/alert
-    username: vergissberlin
-    password: TGjtRWmfHDhAY6WyEZhFjaq9
-
+    url: mqtt://test.mosquitto.org
+    port: 1883
+    topic: test
 
 #####################################################################################
 resource_types:
@@ -25,17 +23,17 @@ resource_types:
 - name: mqtt-resource
   type: docker-image
   source:
-    repository: concourseresources/mqtt-resource
+    repository: vergissberlin/mqtt-resource
+    tag: development
 
 
 #####################################################################################
 jobs:
 
-- name: test
+- name: example
   serial: true
-  build_logs_to_retain: 10
   plan:
-  - aggregate:
+  - in_parallel:
     - get: docker-alpine
       trigger: true
   - task: test
@@ -56,16 +54,41 @@ jobs:
         - -exc
         - |
           echo "Hello World"
+          echo "This is MQTT content" > out/message
+  - task: output
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: alpine
+      inputs:
+      - name: out
+      outputs:
+      - name: out
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          cat out/message
   on_success:
     put: mqtt-broker
     params:
       payload: Release success
+      topic: test
   on_failure:
     put: mqtt-broker
     params:
-      topic: my/overridden/topic
       payload: Release failure
+      topic: test
+  on_error:
+    put: mqtt-broker
+    params:
+      payload: Release error
+      topic: test
   on_abort:
     put: mqtt-broker
     params:
       payload: Release aborted
+      topic: test
