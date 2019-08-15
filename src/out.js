@@ -25,17 +25,25 @@ module.exports = (input, callback) => {
 	if (!error) {
 		let configurationMqtt = configuration.mqtt(input)
 		let client = mqtt.connect(input.source.url, configurationMqtt)
+		let payload
+
+		if ( input.params.json ) {
+			payload = JSON.stringify(input.params.json)
+		} else {
+			payload = input.params.payload.toString
+		}
 		input.params.qos = 0
-		const sendMessage = (async () => {
+
+		const sendMessage = async () => {
 			try {
 				await client.publish(
 					input.params.topic,
-					input.params.payload.toString()
+					payload
 				)
 				output = {
 					'version': {
 						'ref': client.getLastMessageId().toString() || 'none',
-						'message': input.params.payload.toString()
+						'message': payload
 					},
 					'metadata': [
 						{'name': 'ATC_EXTERNAL_URL', 'value': process.env.ATC_EXTERNAL_URL || 'not set'},
@@ -49,7 +57,6 @@ module.exports = (input, callback) => {
 						{'name': 'MQTT_LAST_MESSAGE_ID', 'value': client.getLastMessageId().toString() || 'not set'},
 						{'name': 'source.url', 'value': input.source.url || 'not set'},
 						{'name': 'source.port', 'value': input.source.port.toString() || 'not set'},
-						{'name': 'params.payload', 'value': input.params.payload || 'not set'},
 						{'name': 'params.topic', 'value': input.params.topic || 'not set'},
 						{'name': 'params.qos', 'value': input.params.qos.toString() || 'not set'}
 					]
@@ -59,7 +66,7 @@ module.exports = (input, callback) => {
 			} catch (e) {
 				callback(e.stack, {})
 			}
-		})()
+		}
 		client.on('connect', sendMessage)
 	}
 }

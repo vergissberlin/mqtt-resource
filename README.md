@@ -50,6 +50,8 @@ resource_types:
 
 ## Behavior
 
+### `check`: _Not implemented yet_
+
 ### `in`: _Not implemented yet_
 
 ### `out`: Creates, updates and transitions a MQTT topic
@@ -59,7 +61,19 @@ resource_types:
 * `payload`: The payload for the MQTT topic
 
 ```yaml
-payload: The build was successfully
+payload: "The build was successfully"
+``` 
+* `json`: Instead of sending strings, it is also possible to send JSON strings. You can not use the parameters `payload` and `json` at the same time. 
+
+```yaml
+json: 
+  text: "Some text"
+  array:
+  - arrayData1
+  - arrayData2
+  object:
+    objectData1: 12
+    objectData2: 144
 ```
 
 * `topic`: Override the topic if you want.
@@ -109,4 +123,40 @@ jobs:
       topic: do/something
       payload: Release done
       qos: 2
+```
+
+### Send JSON strings
+
+```yml
+jobs:
+- name: build
+  plan:
+  - get: git-mqtt-resource
+    trigger: true
+  - put: docker-mqtt-resource
+  - put: mqtt
+    params:
+      topic: do/something
+      json:
+        deviceId: 'sensor123'
+        sensorData:
+          - temperature: 'hot'
+          - humidity: 23
+```
+
+#### Result
+
+This will be transfered as a stringyfied JSON to your MQTT topic. 
+```json
+{
+  "deviceId": "sensor123",
+  "sensorData": [
+    {
+      "termperature": "sven"
+    }, 
+    {
+      "humidity": 23
+    }
+  ]
+}
 ```
