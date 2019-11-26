@@ -77,30 +77,12 @@ fly hijack -t local -j mqtt-resource/test
 
 ### Listen MQTT messages
 
-#### With Docker
-
 ```shell
-docker-compose exec mqtt mosquitto_sub -t 'test' -h 'localhost'
-docker run -it eclipse-mosquitto mosquitto_sub -t 'test' -h 'test.mosquitto.org'
-```
-
-#### With node
-
-```shell
-./node_modules/.bin/mqtt_sub -t 'test' -h 'test.mosoquitto.org'
+docker run eclipse-mosquitto mosquitto_sub -t 'test' -h 'test.mosquitto.org'
 ```
 
 ### Send MQTT messages
 
-#### Send MQTT messages with Docker
-
 ```shell
-docker-compose exec mqtt mosquitto_pub -t 'test' -h 'test.mosquitto.org' -m 'test message' -r
-docker run eclipse-mosquitto mosquitto_pub -t 'test' -h 'test.mosquitto.org' -m 'test message' -r
-```
-
-#### Send MQTT messages with node
-
-```shell
-./node_modules/.bin/mqtt_pub -t 'test' -h 'test.mosquitto.org' -m 'test message' -r
+docker run eclipse-mosquitto mosquitto_pub -t 'test' -h 'test.mosquitto.org' -m '😍' -r
 ```

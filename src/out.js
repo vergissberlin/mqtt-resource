@@ -16,28 +16,19 @@ module.exports = (input, callback) => {
 		error = thrownError
 	})
 
-	// if file exist do:
-	//   message = require('fs').readFile('/tmp/build/put/out/message', (err,buf) => { process.stdout.write(buf)})
-	// endif
-	// 	{'name': 'pwd', 'value': process.cwd()},
-
 	// Send MQTT
 	if (!error) {
 		let configurationMqtt = configuration.mqtt(input)
 		let client = mqtt.connect(input.source.url, configurationMqtt)
-		let payload
-
-		if ( input.params.json ) {
-			payload = JSON.stringify(input.params.json)
-		} else {
-			payload = input.params.payload.toString
-		}
-		input.params.qos = 0
+		let payload = validate.json(input.params.json) ? JSON.stringify(input.params.json) : input.params.payload.toString
+		let qos =  input.params.qos ? input.params.qos : input.source.qos
+		let topic =  input.params.topic ? input.params.topic : input.source.topic
+		payload = '{"position": 2, "state": "succeeded"}'
 
 		const sendMessage = async () => {
 			try {
 				await client.publish(
-					input.params.topic,
+					topic,
 					payload
 				)
 				output = {
@@ -46,6 +37,8 @@ module.exports = (input, callback) => {
 						'message': payload
 					},
 					'metadata': [
+						{'name': 'topic', 'value': topic || 'not set'},
+						{'name': 'qos', 'value': qos.toString() || 'not set'},
 						{'name': 'ATC_EXTERNAL_URL', 'value': process.env.ATC_EXTERNAL_URL || 'not set'},
 						{'name': 'BUILD_ID', 'value': process.env.BUILD_ID || 'not set'},
 						{'name': 'BUILD_NAME', 'value': process.env.BUILD_NAME || 'not set'},
@@ -56,9 +49,7 @@ module.exports = (input, callback) => {
 						{'name': 'BUILD_TEAM_NAME', 'value': process.env.BUILD_TEAM_NAME || 'not set'},
 						{'name': 'MQTT_LAST_MESSAGE_ID', 'value': client.getLastMessageId().toString() || 'not set'},
 						{'name': 'source.url', 'value': input.source.url || 'not set'},
-						{'name': 'source.port', 'value': input.source.port.toString() || 'not set'},
-						{'name': 'params.topic', 'value': input.params.topic || 'not set'},
-						{'name': 'params.qos', 'value': input.params.qos.toString() || 'not set'}
+						{'name': 'source.port', 'value': input.source.port.toString() || 'not set'}
 					]
 				}
 				await client.end()
