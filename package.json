@@ -31,7 +31,7 @@
     "chai-string": "^1.5.0",
     "codacy-coverage": "^3.4.0",
     "dotenv": "^7.0.0",
-    "eslint": "^5.16.0",
+    "eslint": "7.28.0",
     "eslint-plugin-chai-expect": "^2.0.1",
     "istanbul": "^0.4.5",
     "mocha": "^6.2.0",
