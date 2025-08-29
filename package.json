@@ -45,6 +45,6 @@
     "async-mqtt": "^2.4.0",
     "debug": "^4.1.0",
     "docker-container-id": "^1.0.1",
-    "mqtt": "^2.18.8"
+    "mqtt": "^4.0.0"
   }
 }
