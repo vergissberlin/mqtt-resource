@@ -45,6 +45,24 @@ describe('validate', () => {
 		})
 	})
 
+	describe('json', () => {
+		it('validate json if variable is undefined.', (done) => {
+			let json = undefined
+			expect(validate.json(json)).to.be.false
+			done()
+		})
+ 		it('validate json if variable is an json object.', (done) => {
+			let json = { "moo": 1}
+			expect(validate.json(json)).to.be.true
+			done()
+		})
+		it('validate json if variable is an json string.', (done) => {
+			let json = '{ "moo": 1}'
+			expect(validate.json(json)).to.be.false
+			done()
+		})
+	})
+
 	describe('source sourceConfiguration', () => {
 		it('throws an error when url is missing', (done) => {
 			delete this.configuration.source.url

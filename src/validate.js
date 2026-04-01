@@ -7,6 +7,13 @@ class Validate {
 		return pattern.test(string)
 	}
 
+	json(json)	{
+		if (typeof json !== 'object' ) {
+			return false
+		}
+		return true
+	}
+
 	sourceConfiguration (input, callback) {
 		let error = null
 

@@ -12,10 +12,15 @@ resources:
 # Others
 - name: mqtt-broker
   type: mqtt-resource
+  check_every: 10s
   source:
-    url: mqtt://test.mosquitto.org
+    url: mqtt://mqttbroker.andrelademann.de
     port: 1883
-    topic: test
+    topic: "monitor/progressives"
+    username: netresearch
+    password: TGjtRWmfHDhAY6WyEZhFjaq9
+    qos: 0
+
 
 #####################################################################################
 resource_types:
@@ -76,19 +81,19 @@ jobs:
     put: mqtt-broker
     params:
       payload: Release success
-      topic: test
+      topic: monitor/progressives
   on_failure:
     put: mqtt-broker
     params:
       payload: Release failure
-      topic: test
+      topic: monitor/progressives
   on_error:
     put: mqtt-broker
     params:
       payload: Release error
-      topic: test
+      topic: monitor/progressives
   on_abort:
     put: mqtt-broker
     params:
       payload: Release aborted
-      topic: test
+      topic: monitor/progressives

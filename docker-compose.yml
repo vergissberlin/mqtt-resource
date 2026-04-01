@@ -29,17 +29,6 @@ services:
     volumes:
       - "concourse-keys:/concourse-keys"
 
-  mqtt:
-    image: eclipse-mosquitto
-    restart: always
-    ports:
-    - "1883:1883"
-    - "9001:9001"
-    volumes:
-    - mqtt-config:/mosquitto/config
-    - mqtt-data:/mosquitto/data
-    - mqtt-log:/mosquitto/log
-
   mqtt-resource:
     build: .
     image: vergissberlin/mqtt-resource:development
@@ -48,6 +37,3 @@ services:
 
 volumes:
   concourse-keys:
-  mqtt-config:
-  mqtt-data:
-  mqtt-log:
