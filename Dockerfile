@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.24
 
 ARG CODACY_PROJECT_TOKEN
 
